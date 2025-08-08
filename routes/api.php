@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\EventRegistrationController;
+use App\Http\Controllers\Api\JobApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,4 @@ use App\Http\Controllers\Api\EventRegistrationController;
 */
 
 Route::post('/event-registrations', [EventRegistrationController::class, 'store']);
-
+Route::post('/job-applications', [JobApplicationController::class, 'store']);
