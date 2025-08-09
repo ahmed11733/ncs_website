@@ -4,11 +4,11 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>{{__('admin.project-name')}} - {{__('admin.Dashboard')}}</title>
+    <title>NCS - Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="{{__('admin.project-name')}} - {{__('admin.Dashboard')}}"
-          name="{{__('admin.project-name')}} - {{__('admin.Dashboard')}}"/>
-    <meta content="{{__('admin.project-name')}} - {{__('admin.Dashboard')}}" name="{{__('admin.project-name')}}"/>
+    <meta content="NCS - Dashboard"
+          name="NCS - Dashboard"/>
+    <meta content="NCS - Dashboard" name="NCS"/>
     <link rel="shortcut icon" href="{{asset('admin_assets/images/logo.png')}}">
     <!-- spider effect -->
     <link rel="stylesheet" href="{{asset('admin_assets/css/style-slider.css')}}">

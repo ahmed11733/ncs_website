@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="en" dir="rtl">
+<html lang="en" dir="ltr">
 
 <head>
 
     <meta charset="utf-8"/>
-    <title>لوحه تحكم سنونو</title>
+    <title>NCS Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="لوحه تحكم سنونو"
-          name="لوحه تحكم سنونو"/>
-    <meta content="لوحه تحكم سنونو" name="سنونو"/>
+    <meta content="NCS Dashboard"
+          name="NCS Dashboard"/>
+    <meta content="NCS Dashboard" name="NCS"/>
     <link rel="shortcut icon" href="{{asset('admin_assets/images/logo.png')}}">
     <link rel="icon" href="{{asset('admin_assets/images/logo.png')}}">
 
@@ -17,12 +17,12 @@
 <!-- Bootstrap Css -->
     <link href="{{asset('admin_assets/libs/toastr/build/toastr.min.css')}}" id="bootstrap-style" rel="stylesheet"
           type="text/css"/>
-    <link href="{{asset('admin_assets/css/bootstrap-rtl.min.css')}}" id="bootstrap-style" rel="stylesheet"
+    <link href="{{asset('admin_assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet"
           type="text/css"/>
     <!-- Icons Css -->
     <link href="{{asset('admin_assets/css/icons.min.css')}}" rel="stylesheet" type="text/css"/>
     <!-- App Css-->
-    <link href="{{asset('admin_assets/css/app-rtl.min.css')}}" id="app-style" rel="stylesheet" type="text/css"/>
+    <link href="{{asset('admin_assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css"/>
     @yield('extra-last-css')
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -47,12 +47,13 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
-                        <script>document.write(new Date().getFullYear())</script> {{__('admin.main-copy-rights')}} <a
-                          href="https://2grand.net/" target="_blank" >{{__('admin.grand')}}</a>.
+                        <script>document.write(new Date().getFullYear())</script>
+                        Copy Rights <a
+                            href="" target="_blank">NCS</a>.
                     </div>
                     <div class="col-sm-6">
                         <div class="text-sm-end d-none d-sm-block">
-                            {{__('admin.copy-rights')}}
+                            Copy Rights
                         </div>
                     </div>
                 </div>
@@ -94,9 +95,8 @@
 
 </script>
 @if(Session::has('success'))
-
     <script>
-        toastr["success"]("تم بنجاح")
+        toastr["success"]("Done Successfully")
 
         toastr.options = {
             "closeButton": true,
@@ -117,7 +117,6 @@
         }
 
     </script>
-
 @endif
 @if ($errors->any())
 

@@ -17,7 +17,7 @@
             table {
                 width: 100% !important;
                 border-collapse: collapse !important;
-                page-break-inside: auto !important; /* Ensures tables are not split across pages */
+                page-break-inside: auto !important; /*$ Ensures tables are not split across pages */
                 table-layout: fixed !important;
 
             }
