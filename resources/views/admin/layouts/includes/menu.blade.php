@@ -18,6 +18,18 @@
                         <span key="t-chat">Jobs</span>
                     </a>
                 </li>
+                <li @if(Route::is('admin.page-categories.index*') ) class="mm-active" @endif>
+                    <a href="{{route('admin.page-categories.index')}}" class="waves-effect">
+                        <i class="bx bx-collection"></i>
+                        <span key="t-chat">Pages Categories</span>
+                    </a>
+                </li>
+                <li @if(Route::is('admin.pages.index*') ) class="mm-active" @endif>
+                    <a href="{{route('admin.pages.index')}}" class="waves-effect">
+                        <i class="bx bx-file"></i>
+                        <span key="t-chat">All  Pages</span>
+                    </a>
+                </li>
                 @can('access_drivers_admin')
                     <li class="nav-item @if(Route::is('admin.drivers*')) mm-active @endif">
                         <a class="nav-link" href="#"

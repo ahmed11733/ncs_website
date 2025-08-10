@@ -3,6 +3,9 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\EventsController;
 use App\Http\Controllers\Admin\JobsController;
+use App\Http\Controllers\Admin\PageCategoryController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PageSectionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +38,14 @@ Route::group(['as' => 'admin.', 'prefix' => '/admin'], function () {
             Route::put('/update/{job}', [JobsController::class, 'update'])->name('update');
             Route::delete('/destroy/{id}', [JobsController::class, 'destroy'])->name('destroy');
         });
+
+        Route::resource('page-categories', PageCategoryController::class)
+            ->except(['show']);
+        Route::resource('pages', PageController::class)
+            ->except(['show']);
+        Route::resource('page-sections', PageSectionController::class)
+            ->except(['show']);
+
 
 
 //        Route::resource('users', UsersController::class);

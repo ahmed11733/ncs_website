@@ -7,7 +7,7 @@
     <link href="{{asset('admin_assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" id="bootstrap-style" rel="stylesheet"
           type="text/css"/>
     <!-- CKEditor CSS -->
-    <link href="{{asset('admin_assets/libs/ckeditor/skins/moono-lisa/editor.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset('admin_assets/ckeditor/skins/kama/editor.css')}}" rel="stylesheet" type="text/css"/>
     <style>
         .alert-text{
             color: red;
@@ -176,8 +176,8 @@
     <!-- bootstrap-datepicker js -->
     <script src="{{asset('admin_assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <!-- CKEditor JS -->
-    <script src="{{asset('admin_assets/libs/ckeditor/ckeditor.js')}}"></script>
-    <script src="{{asset('admin_assets/libs/ckeditor/adapters/jquery.js')}}"></script>
+    <script src="{{asset('admin_assets/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{asset('admin_assets/ckeditor/adapters/jquery.js')}}"></script>
 
     <!-- Required datatable js -->
     <script src="{{asset('admin_assets/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>

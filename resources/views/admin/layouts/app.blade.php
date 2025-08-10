@@ -82,7 +82,7 @@
 @yield('extra-js')
 <!-- apexcharts -->
 <!-- App js -->
-<script src="{{asset('admin_assets/js/app.js')}}"></script>
+{{--<script src="{{asset('admin_assets/js/app.js')}}"></script>--}}
 @yield('add-product-js')
 {{--    @if(app()->getLocale()=='ar')--}}
 <script>
@@ -121,7 +121,7 @@
 @if ($errors->any())
 
     <script>
-        toastr["error"]("{{__('admin.please-check-all-entered-data')}}")
+        toastr["error"]("{{'Please Check All Entered Data'}}")
 
         toastr.options = {
             "closeButton": true,
