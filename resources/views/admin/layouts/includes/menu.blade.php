@@ -30,6 +30,12 @@
                         <span key="t-chat">All  Pages</span>
                     </a>
                 </li>
+                <li @if(Route::is('admin.contact-messages.index*')) class="mm-active" @endif>
+                    <a href="{{ route('admin.contact-messages.index') }}" class="waves-effect">
+                        <i class="bx bx-envelope"></i>
+                        <span key="t-contact-messages">Contact Messages</span>
+                    </a>
+                </li>
                 @can('access_drivers_admin')
                     <li class="nav-item @if(Route::is('admin.drivers*')) mm-active @endif">
                         <a class="nav-link" href="#"

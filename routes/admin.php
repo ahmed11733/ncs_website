@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\EventsController;
 use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\PageCategoryController;
@@ -45,6 +46,11 @@ Route::group(['as' => 'admin.', 'prefix' => '/admin'], function () {
             ->except(['show']);
         Route::resource('page-sections', PageSectionController::class)
             ->except(['show']);
+
+        Route::get('/contact-messages', [ContactMessageController::class, 'index'])
+            ->name('contact-messages.index');
+        Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])
+            ->name('contact-messages.destroy');
 
 
 
