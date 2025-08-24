@@ -131,7 +131,7 @@
         })();
     </script>
 @endsection
-
+@section('extra-css')
 <style>
     .auth-page-wrapper {
         min-height: 100vh;
@@ -209,3 +209,4 @@
         }
     }
 </style>
+@endsection
