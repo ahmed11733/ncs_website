@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Admin;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-      Admin::create([
+      Admin::query()->create([
         'name' => 'admin',
         'email' => 'admin@admin.com',
         'phone' => '01066075300',
