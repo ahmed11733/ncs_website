@@ -14,11 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-      Admin::query()->create([
-        'name' => 'admin',
-        'email' => 'admin@admin.com',
-        'phone' => '01066075300',
-        'password' => Hash::make('12345678'),
-    ]);
+        $admin = Admin::query()->where('email' ,'admin@admin.com')->first();
+        if (!$admin){
+            Admin::query()->create([
+                'name' => 'admin',
+                'email' => 'admin@admin.com',
+                'phone' => '01066075300',
+                'password' => Hash::make('12345678'),
+            ]);
+        }
+
     }
 }
