@@ -24,5 +24,10 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+//        $this->call([
+//            DepartmentAndJobSeeder::class,
+//            PageStructureSeeder::class,
+//        ]);
+
     }
 }
