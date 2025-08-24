@@ -26,7 +26,7 @@
     <link href="{{asset('admin_assets/css/app-rtl.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
 
 
-
+    @yield('extra-css')
 </head>
 <body class="auth-body-bg">
 
