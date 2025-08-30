@@ -6,6 +6,24 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
+                <li @if(Route::is('admin.dynamicPages.home*') ) class="mm-active" @endif>
+                    <a href="{{ route('admin.dynamicPages.home') }}" class="waves-effect">
+                        <i class="bx bx-home-alt"></i>
+                        <span>Home Page</span>
+                    </a>
+                </li>
+                <li @if(Route::is('admin.dynamicPages.about*') ) class="mm-active" @endif>
+                    <a href="{{ route('admin.dynamicPages.about') }}" class="waves-effect">
+                        <i class="bx bx-info-circle"></i>
+                        <span>About Us Page</span>
+                    </a>
+                </li>
+                <li @if(Route::is('admin.dynamicPages.contact*') ) class="mm-active" @endif>
+                    <a href="{{ route('admin.dynamicPages.contact') }}" class="waves-effect">
+                        <i class="bx bx-phone"></i>
+                        <span>Contact Us Page</span>
+                    </a>
+                </li>
                 <li @if(Route::is('admin.events.registrations*') ) class="mm-active" @endif>
                     <a href="{{route('admin.events.registrations')}}" class="waves-effect">
                         <i class="bx bx-calendar-check"></i>
@@ -34,6 +52,12 @@
                     <a href="{{ route('admin.contact-messages.index') }}" class="waves-effect">
                         <i class="bx bx-envelope"></i>
                         <span key="t-contact-messages">Contact Messages</span>
+                    </a>
+                </li>
+                <li @if(Route::is('admin.demo-requests*') ) class="mm-active" @endif>
+                    <a href="{{ route('admin.demo-requests.index') }}" class="waves-effect">
+                        <i class="bx bx-calendar-check"></i>
+                        <span>Demo Requests</span>
                     </a>
                 </li>
                 @can('access_drivers_admin')

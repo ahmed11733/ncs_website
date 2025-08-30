@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\DemoRequestController;
+use App\Http\Controllers\Admin\DynamicPageController;
 use App\Http\Controllers\Admin\EventsController;
 use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\PageCategoryController;
@@ -51,6 +53,25 @@ Route::group(['as' => 'admin.', 'prefix' => '/admin'], function () {
             ->name('contact-messages.index');
         Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])
             ->name('contact-messages.destroy');
+
+        Route::prefix('/demo-requests')->name('demo-requests.')->group(function () {
+            Route::get('/', [DemoRequestController::class, 'index'])->name('index');
+            Route::delete('/{demoRequest}', [DemoRequestController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('/dynamic-pages')->name('dynamicPages.')->group(function () {
+            // Home Page Routes
+            Route::get('/home', [DynamicPageController::class, 'homeEdit'])->name('home');
+            Route::post('/home', [DynamicPageController::class, 'homeUpdate'])->name('home.update');
+
+            // About Us Page Routes
+            Route::get('/about', [DynamicPageController::class, 'aboutEdit'])->name('about');
+            Route::post('/about', [DynamicPageController::class, 'aboutUpdate'])->name('about.update');
+
+            // Contact Us Page Routes
+            Route::get('/contact', [DynamicPageController::class, 'contactEdit'])->name('contact');
+            Route::post('/contact', [DynamicPageController::class, 'contactUpdate'])->name('contact.update');
+        });
 
 
 

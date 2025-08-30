@@ -38,7 +38,7 @@ class AuthController extends Controller
             if(auth()->guard('admin')->user()->is_super_admin!=1){
                 session()->put('branch_id', auth()->guard('admin')->user()->branch_id);
             }
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dynamicPages.home');
         }
         else{
 

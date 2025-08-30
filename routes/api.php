@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ContactMessageController;
+use App\Http\Controllers\Api\DemoRequestController;
 use App\Http\Controllers\Api\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\EventRegistrationController;
@@ -27,3 +28,5 @@ Route::post('/job-applications', [JobsController::class, 'store']);
 Route::get('/pages/show/{page}', [PageController::class, 'show']);
 
 Route::post('/contact', [ContactMessageController::class, 'store']);
+
+Route::post('/demo-requests', [DemoRequestController::class, 'store']);
