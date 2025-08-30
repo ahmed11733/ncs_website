@@ -42,7 +42,7 @@ class UpdateHomePageRequest extends FormRequest
             // Industries Section
             'industries_heading' => 'required|string|max:255',
             'industries' => 'sometimes|array',
-            'industries.*.title' => 'sometimes|string|max:100',
+            'industries.*.title' => 'nullable|string|max:100',
             'industries.*.image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024',
 
             // Video Section
@@ -58,9 +58,9 @@ class UpdateHomePageRequest extends FormRequest
             // Testimonials Section
             'testimonials_heading' => 'required|string|max:255',
             'testimonials' => 'required|array',
-            'testimonials.*.name' => 'required|string|max:255',
-            'testimonials.*.position' => 'required|string|max:255',
-            'testimonials.*.text' => 'required|string',
+            'testimonials.*.name' => 'nullable|string|max:255',
+            'testimonials.*.position' => 'nullable|string|max:255',
+            'testimonials.*.text' => 'nullable|string',
             'testimonials.*.stars' => 'required|integer|min:1|max:5',
             'testimonials.*.image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024',
         ];
