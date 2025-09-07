@@ -71,6 +71,11 @@ Route::group(['as' => 'admin.', 'prefix' => '/admin'], function () {
             // Contact Us Page Routes
             Route::get('/contact', [DynamicPageController::class, 'contactEdit'])->name('contact');
             Route::post('/contact', [DynamicPageController::class, 'contactUpdate'])->name('contact.update');
+
+            // Footer Routes
+            Route::get('/footer', [DynamicPageController::class, 'footerEdit'])->name('footer');
+            Route::post('/footer', [DynamicPageController::class, 'footerUpdate'])->name('footer.update');
+
         });
 
 

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class DynamicPage extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
 
     protected $fillable = [
         'page_key',
@@ -17,4 +18,6 @@ class DynamicPage extends Model
     protected $casts = [
         'content' => 'array',
     ];
+
+    public $translatable = ['content'];
 }

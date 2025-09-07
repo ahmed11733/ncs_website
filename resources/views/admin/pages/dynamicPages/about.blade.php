@@ -6,6 +6,10 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0">Edit About Us Page Content</h4>
+                    <button type="button" id="languageToggle" class="btn btn-outline-primary">
+                        <span class="en-text">Switch to العربية</span>
+                        <span class="ar-text" style="display: none;">تبديل إلى English</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -46,19 +50,42 @@
                                     <h5>Hero Section</h5>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Title <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control @error('hero_title') is-invalid @enderror" name="hero_title"
-                                                       value="{{ old('hero_title', $page->content['hero_title'] ?? 'About Us') }}">
-                                                @error('hero_title')
+                                            <!-- English Hero Title -->
+                                            <div class="mb-3 en-field">
+                                                <label class="form-label">Title (English) <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('hero_title.en') is-invalid @enderror" name="hero_title[en]"
+                                                       value="{{ old('hero_title.en', $page->getTranslation('content', 'en')['hero_title'] ?? 'About Us') }}">
+                                                @error('hero_title.en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Subtitle <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control @error('hero_subtitle') is-invalid @enderror" name="hero_subtitle"
-                                                       value="{{ old('hero_subtitle', $page->content['hero_subtitle'] ?? 'Empowering Businesses Through Smart IT Solutions') }}">
-                                                @error('hero_subtitle')
+
+                                            <!-- Arabic Hero Title -->
+                                            <div class="mb-3 ar-field" style="display: none;">
+                                                <label class="form-label">العنوان (العربية) <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('hero_title.ar') is-invalid @enderror" name="hero_title[ar]"
+                                                       value="{{ old('hero_title.ar', $page->getTranslation('content', 'ar')['hero_title'] ?? 'من نحن') }}" dir="rtl">
+                                                @error('hero_title.ar')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- English Hero Subtitle -->
+                                            <div class="mb-3 en-field">
+                                                <label class="form-label">Subtitle (English) <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('hero_subtitle.en') is-invalid @enderror" name="hero_subtitle[en]"
+                                                       value="{{ old('hero_subtitle.en', $page->getTranslation('content', 'en')['hero_subtitle'] ?? 'Learn More About Our Company And Our Mission') }}">
+                                                @error('hero_subtitle.en')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Arabic Hero Subtitle -->
+                                            <div class="mb-3 ar-field" style="display: none;">
+                                                <label class="form-label">العنوان الفرعي (العربية) <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('hero_subtitle.ar') is-invalid @enderror" name="hero_subtitle[ar]"
+                                                       value="{{ old('hero_subtitle.ar', $page->getTranslation('content', 'ar')['hero_subtitle'] ?? 'تعرف أكثر على شركتنا ومهمتنا') }}" dir="rtl">
+                                                @error('hero_subtitle.ar')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -70,9 +97,9 @@
                                                 @error('hero_image')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
-                                                @if(isset($page->content['hero_image']))
+                                                @if(isset($page->getTranslation('content', 'en')['hero_image']) && $page->getTranslation('content', 'en')['hero_image'])
                                                     <div class="mt-2">
-                                                        <img src="{{ asset($page->content['hero_image']) }}" alt="Hero Image" style="max-width: 200px; max-height: 150px;">
+                                                        <img src="{{ asset($page->getTranslation('content', 'en')['hero_image']) }}" alt="Hero Image" style="max-width: 200px; max-height: 150px;">
                                                         <small class="d-block text-muted">Current image</small>
                                                     </div>
                                                 @endif
@@ -84,102 +111,183 @@
                                 <!-- About Section -->
                                 <div class="tab-pane" id="about" role="tabpanel">
                                     <h5>About Section</h5>
-                                    <div class="mb-3">
-                                        <label class="form-label">Title <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('about_title') is-invalid @enderror" name="about_title"
-                                               value="{{ old('about_title', $page->content['about_title'] ?? 'About Us') }}">
-                                        @error('about_title')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Description<span class="text-danger">*</span></label>
-                                        <textarea class="form-control @error('about_description') is-invalid @enderror" name="about_description" rows="4">{{ old('about_description', $page->content['about_description'] ?? 'Lorem Ipsum is simply dummy text of the printing and typesetting industry...') }}</textarea>
-                                        @error('about_description')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">About Image</label>
-                                        <input type="file" class="form-control @error('about_image') is-invalid @enderror" name="about_image" accept="image/*">
-                                        @error('about_image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                        @if(isset($page->content['about_image']))
-                                            <div class="mt-2">
-                                                <img src="{{ asset($page->content['about_image']) }}" alt="About Image" style="max-width: 200px; max-height: 150px;">
-                                                <small class="d-block text-muted">Current image</small>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <!-- English About Title -->
+                                            <div class="mb-3 en-field">
+                                                <label class="form-label">Title (English) <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('about_title.en') is-invalid @enderror" name="about_title[en]"
+                                                       value="{{ old('about_title.en', $page->getTranslation('content', 'en')['about_title'] ?? 'About Our Company') }}">
+                                                @error('about_title.en')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
-                                        @endif
+
+                                            <!-- Arabic About Title -->
+                                            <div class="mb-3 ar-field" style="display: none;">
+                                                <label class="form-label">العنوان (العربية) <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('about_title.ar') is-invalid @enderror" name="about_title[ar]"
+                                                       value="{{ old('about_title.ar', $page->getTranslation('content', 'ar')['about_title'] ?? 'عن شركتنا') }}" dir="rtl">
+                                                @error('about_title.ar')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- English About Description -->
+                                            <div class="mb-3 en-field">
+                                                <label class="form-label">Description (English) <span class="text-danger">*</span></label>
+                                                <textarea class="form-control @error('about_description.en') is-invalid @enderror" name="about_description[en]" rows="5">{{ old('about_description.en', $page->getTranslation('content', 'en')['about_description'] ?? 'We are a leading company in our industry with years of experience...') }}</textarea>
+                                                @error('about_description.en')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Arabic About Description -->
+                                            <div class="mb-3 ar-field" style="display: none;">
+                                                <label class="form-label">الوصف (العربية) <span class="text-danger">*</span></label>
+                                                <textarea class="form-control @error('about_description.ar') is-invalid @enderror" name="about_description[ar]" rows="5" dir="rtl">{{ old('about_description.ar', $page->getTranslation('content', 'ar')['about_description'] ?? 'نحن شركة رائدة في مجالنا مع سنوات من الخبرة...') }}</textarea>
+                                                @error('about_description.ar')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">About Image</label>
+                                                <input type="file" class="form-control @error('about_image') is-invalid @enderror" name="about_image" accept="image/*">
+                                                @error('about_image')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                                @if(isset($page->getTranslation('content', 'en')['about_image']) && $page->getTranslation('content', 'en')['about_image'])
+                                                    <div class="mt-2">
+                                                        <img src="{{ asset($page->getTranslation('content', 'en')['about_image']) }}" alt="About Image" style="max-width: 200px; max-height: 150px;">
+                                                        <small class="d-block text-muted">Current image</small>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- Why Choose Us Section -->
                                 <div class="tab-pane" id="why-choose" role="tabpanel">
                                     <h5>Why Choose Us Section</h5>
-                                    <div class="mb-3">
-                                        <label class="form-label">Title <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('why_choose_title') is-invalid @enderror" name="why_choose_title"
-                                               value="{{ old('why_choose_title', $page->content['why_choose_title'] ?? 'Excellence in Every Line of Code') }}">
-                                        @error('why_choose_title')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Subtitle <span class="text-danger">*</span></label>
-                                        <textarea class="form-control @error('why_choose_subtitle') is-invalid @enderror" name="why_choose_subtitle" rows="3">{{ old('why_choose_subtitle', $page->content['why_choose_subtitle'] ?? 'More than just IT services — we deliver intelligent, scalable solutions...') }}</textarea>
-                                        @error('why_choose_subtitle')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+
+                                    <div class="row mb-4">
+                                        <div class="col-12">
+                                            <!-- English Why Choose Title -->
+                                            <div class="mb-3 en-field">
+                                                <label class="form-label">Main Title (English) <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('why_choose_main_title.en') is-invalid @enderror" name="why_choose_main_title[en]"
+                                                       value="{{ old('why_choose_main_title.en', $page->getTranslation('content', 'en')['why_choose_title'] ?? 'Why Choose Us') }}">
+                                                @error('why_choose_main_title.en')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Arabic Why Choose Title -->
+                                            <div class="mb-3 ar-field" style="display: none;">
+                                                <label class="form-label">العنوان الرئيسي (العربية) <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('why_choose_main_title.ar') is-invalid @enderror" name="why_choose_main_title[ar]"
+                                                       value="{{ old('why_choose_main_title.ar', $page->getTranslation('content', 'ar')['why_choose_title'] ?? 'لماذا تختارنا') }}" dir="rtl">
+                                                @error('why_choose_main_title.ar')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- English Why Choose Subtitle -->
+                                            <div class="mb-3 en-field">
+                                                <label class="form-label">Subtitle (English) <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('why_choose_main_subtitle.en') is-invalid @enderror" name="why_choose_main_subtitle[en]"
+                                                       value="{{ old('why_choose_main_subtitle.en', $page->getTranslation('content', 'en')['why_choose_subtitle'] ?? 'Discover the reasons why our clients trust us') }}">
+                                                @error('why_choose_main_subtitle.en')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Arabic Why Choose Subtitle -->
+                                            <div class="mb-3 ar-field" style="display: none;">
+                                                <label class="form-label">العنوان الفرعي (العربية) <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control @error('why_choose_main_subtitle.ar') is-invalid @enderror" name="why_choose_main_subtitle[ar]"
+                                                       value="{{ old('why_choose_main_subtitle.ar', $page->getTranslation('content', 'ar')['why_choose_subtitle'] ?? 'اكتشف الأسباب التي تجعل عملائنا يثقون بنا') }}" dir="rtl">
+                                                @error('why_choose_main_subtitle.ar')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <h6>Why Choose Us Items (10 Items)</h6>
+                                    <h6>Why Choose Us Items</h6>
                                     <div id="why-choose-items-container">
+                                        @php
+                                            $items = $page->getTranslation('content', 'en')['why_choose_items'] ?? [];
+                                            $itemCount = count($items);
+                                            if ($itemCount === 0) $itemCount = 10; // Fixed to 10 items
+                                        @endphp
+
                                         @for($i = 0; $i < 10; $i++)
-                                            @php
-                                                $item = old('why_choose_items.' . $i, $page->content['why_choose_items'][$i] ?? ['title' => '', 'description' => '']);
-                                            @endphp
                                             <div class="card mb-3 why-choose-item">
                                                 <div class="card-header">
-                                                    <h6 class="mb-0">Item {{ $i + 1 }}</h6>
+                                                    <h5 class="mb-0">Item {{ $i + 1 }}</h5>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Title <span class="text-danger">*</span></label>
-                                                                <input type="text" class="form-control @error('why_choose_items.'.$i.'.title') is-invalid @enderror"
-                                                                       name="why_choose_items[{{$i}}][title]"
-                                                                       value="{{ $item['title'] }}"
-                                                                       placeholder="e.g., Contrary To Popular Belief">
-                                                                @error('why_choose_items.'.$i.'.title')
+                                                            <!-- English Item Title -->
+                                                            <div class="mb-3 en-field">
+                                                                <label class="form-label">Title (English) <span class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control @error("why_choose_title.en.$i") is-invalid @enderror" name="why_choose_title[en][]"
+                                                                       value="{{ old("why_choose_title.en.$i", $items[$i]['title'] ?? '') }}">
+                                                                @error("why_choose_title.en.$i")
                                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                                 @enderror
                                                             </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Description <span class="text-danger">*</span></label>
-                                                                <textarea class="form-control @error('why_choose_items.'.$i.'.description') is-invalid @enderror"
-                                                                          name="why_choose_items[{{$i}}][description]" rows="3"
-                                                                          placeholder="e.g., Lorem Ipsum is simply dummy text...">{{ $item['description'] }}</textarea>
-                                                                @error('why_choose_items.'.$i.'.description')
+
+                                                            <!-- Arabic Item Title -->
+                                                            <div class="mb-3 ar-field" style="display: none;">
+                                                                <label class="form-label">العنوان (العربية) <span class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control @error("why_choose_title.ar.$i") is-invalid @enderror" name="why_choose_title[ar][]" dir="rtl"
+                                                                       value="{{ old("why_choose_title.ar.$i", $page->getTranslation('content', 'ar')['why_choose_items'][$i]['title'] ?? '') }}">
+                                                                @error("why_choose_title.ar.$i")
                                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                                 @enderror
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="mb-3">
-                                                                <label class="form-label">Image</label>
-                                                                <input type="file" class="form-control @error('why_choose_items.'.$i.'.image') is-invalid @enderror"
-                                                                       name="why_choose_items[{{$i}}][image]" accept="image/*">
-                                                                @error('why_choose_items.'.$i.'.image')
+                                                                <label class="form-label">Icon</label>
+                                                                <input type="file" class="form-control @error("why_choose_icon_$i") is-invalid @enderror" name="why_choose_icon_{{$i}}" accept="image/*">
+                                                                @error("why_choose_icon_$i")
                                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                                 @enderror
-                                                                @if(isset($item['image']))
+                                                                @if(isset($items[$i]['icon']) && $items[$i]['icon'])
                                                                     <div class="mt-2">
-                                                                        <img src="{{ asset($item['image']) }}" alt="Item Image" style="max-width: 100px; max-height: 80px;">
-                                                                        <small class="d-block text-muted">Current image</small>
+                                                                        <img src="{{ asset($items[$i]['icon']) }}" alt="Item Icon" style="max-width: 50px; max-height: 50px;">
+                                                                        <small class="d-block text-muted">Current icon</small>
                                                                     </div>
                                                                 @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <!-- English Item Description -->
+                                                            <div class="mb-3 en-field">
+                                                                <label class="form-label">Description (English) <span class="text-danger">*</span></label>
+                                                                <textarea class="form-control @error("why_choose_description.en.$i") is-invalid @enderror" name="why_choose_description[en][]" rows="3">{{ old("why_choose_description.en.$i", $items[$i]['description'] ?? '') }}</textarea>
+                                                                @error("why_choose_description.en.$i")
+                                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+
+                                                            <!-- Arabic Item Description -->
+                                                            <div class="mb-3 ar-field" style="display: none;">
+                                                                <label class="form-label">الوصف (العربية) <span class="text-danger">*</span></label>
+                                                                <textarea class="form-control @error("why_choose_description.ar.$i") is-invalid @enderror" name="why_choose_description[ar][]" rows="3" dir="rtl">{{ old("why_choose_description.ar.$i", $page->getTranslation('content', 'ar')['why_choose_items'][$i]['description'] ?? '') }}</textarea>
+                                                                @error("why_choose_description.ar.$i")
+                                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                                @enderror
                                                             </div>
                                                         </div>
                                                     </div>
@@ -202,25 +310,61 @@
     </div>
 @endsection
 
-@section('scripts')
+@section('extra-js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const languageToggle = document.getElementById('languageToggle');
+            const enFields = document.querySelectorAll('.en-field');
+            const arFields = document.querySelectorAll('.ar-field');
+            const enTexts = document.querySelectorAll('.en-text');
+            const arTexts = document.querySelectorAll('.ar-text');
+
+            let isEnglish = true;
+
+            function toggleLanguage() {
+                isEnglish = !isEnglish;
+
+                enFields.forEach(field => {
+                    field.style.display = isEnglish ? 'block' : 'none';
+                });
+
+                arFields.forEach(field => {
+                    field.style.display = isEnglish ? 'none' : 'block';
+                });
+
+                enTexts.forEach(text => {
+                    text.style.display = isEnglish ? 'inline' : 'none';
+                });
+
+                arTexts.forEach(text => {
+                    text.style.display = isEnglish ? 'none' : 'inline';
+                });
+            }
+
+            languageToggle.addEventListener('click', toggleLanguage);
+
             // Auto-navigate to tab with errors
                 @if($errors->any())
             const errorFields = @json($errors->keys());
             if (errorFields.length > 0) {
                 const firstErrorField = errorFields[0];
                 const fieldToTabMap = {
-                    'hero': ['hero_title', 'hero_subtitle', 'hero_image'],
-                    'about': ['about_title', 'about_description', 'about_image'],
-                    'why-choose': ['why_choose_title', 'why_choose_subtitle', 'why_choose_items']
+                    'hero': ['hero_title.en', 'hero_title.ar', 'hero_subtitle.en', 'hero_subtitle.ar', 'hero_image'],
+                    'about': ['about_title.en', 'about_title.ar', 'about_description.en', 'about_description.ar', 'about_image'],
+                    'why-choose': ['why_choose_main_title.en', 'why_choose_main_title.ar', 'why_choose_main_subtitle.en', 'why_choose_main_subtitle.ar', 'why_choose_title', 'why_choose_description']
                 };
 
                 for (const [tabId, fields] of Object.entries(fieldToTabMap)) {
-                    if (fields.some(field => firstErrorField.startsWith(field))) {
+                    if (fields.some(field => firstErrorField.includes(field))) {
                         const tabLink = document.querySelector(`[href="#${tabId}"]`);
                         if (tabLink) {
                             new bootstrap.Tab(tabLink).show();
+
+                            if (firstErrorField.includes('.ar') && isEnglish) {
+                                toggleLanguage();
+                            } else if (firstErrorField.includes('.en') && !isEnglish) {
+                                toggleLanguage();
+                            }
                         }
                         break;
                     }

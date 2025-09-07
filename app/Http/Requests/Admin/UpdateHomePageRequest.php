@@ -26,62 +26,55 @@ class UpdateHomePageRequest extends FormRequest
     {
         return [
             // Hero Section
-            'hero_title' => 'required|string|max:255',
-            'hero_subtitle' => 'required|string|max:255',
-            'hero_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'hero_title.en' => 'required|string|max:255',
+            'hero_title.ar' => 'required|string|max:255',
+            'hero_subtitle.en' => 'required|string|max:255',
+            'hero_subtitle.ar' => 'required|string|max:255',
+            'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
 
             // Trusted Companies
-            'trusted_companies_heading' => 'required|string|max:255',
-            'company_logos.*' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024',
+            'trusted_companies_heading.en' => 'required|string|max:255',
+            'trusted_companies_heading.ar' => 'required|string|max:255',
+            'company_logos_en_*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
 
             // About Section
-            'about_heading' => 'required|string|max:255',
-            'about_description' => 'required|string',
-            'about_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'about_heading.en' => 'required|string|max:255',
+            'about_heading.ar' => 'required|string|max:255',
+            'about_description.en' => 'required|string',
+            'about_description.ar' => 'required|string',
+            'about_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
 
             // Industries Section
-            'industries_heading' => 'required|string|max:255',
-            'industries' => 'sometimes|array',
-            'industries.*.title' => 'nullable|string|max:100',
-            'industries.*.image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024',
+            'industries_heading.en' => 'nullable|string|max:255',
+            'industries_heading.ar' => 'nullable|string|max:255',
+            'industries_title.en.*' => 'nullable|string|max:255',
+            'industries_title.ar.*' => 'nullable|string|max:255',
+            'industries_image_en_*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
 
             // Video Section
-            'video_file' => 'sometimes|mimetypes:video/mp4,video/quicktime,video/x-msvideo,video/webm|max:51200', // 50MB max
+            'video_file' => 'nullable|mimes:mp4,mov,avi|max:51200',
 
             // Careers Section
-            'careers_heading' => 'required|string|max:255',
-            'careers_description' => 'required|string',
-            'careers_image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'careers_features' => 'required|array',
-            'careers_features.*' => 'nullable|string|max:255',
+            'careers_heading.en' => 'required|string|max:255',
+            'careers_heading.ar' => 'required|string|max:255',
+            'careers_description.en' => 'required|string',
+            'careers_description.ar' => 'required|string',
+            'careers_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'careers_features.en.*' => 'nullable|string|max:255',
+            'careers_features.ar.*' => 'nullable|string|max:255',
 
             // Testimonials Section
-            'testimonials_heading' => 'required|string|max:255',
-            'testimonials' => 'required|array',
-            'testimonials.*.name' => 'nullable|string|max:255',
-            'testimonials.*.position' => 'nullable|string|max:255',
-            'testimonials.*.text' => 'nullable|string',
-            'testimonials.*.stars' => 'required|integer|min:1|max:5',
-            'testimonials.*.image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024',
-        ];
-    }
-
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array<string, string>
-     */
-    public function messages()
-    {
-        return [
-            'hero_image.image' => 'The hero image must be a valid image file.',
-            'hero_image.max' => 'The hero image may not be greater than 2MB.',
-            'company_logos.*.image' => 'Each company logo must be a valid image file.',
-            'company_logos.*.max' => 'Each company logo may not be greater than 1MB.',
-            'video_file.mimetypes' => 'The video file must be a valid video format (MP4, MOV, AVI, WEBM).',
-            'video_file.max' => 'The video file may not be greater than 50MB.',
-            'testimonials.*.stars.min' => 'The star rating must be at least 1.',
-            'testimonials.*.stars.max' => 'The star rating may not be greater than 5.',
+            'testimonials_heading.en' => 'required|string|max:255',
+            'testimonials_heading.ar' => 'required|string|max:255',
+            'testimonials_name.en.*' => 'nullable|string|max:255',
+            'testimonials_name.ar.*' => 'nullable|string|max:255',
+            'testimonials_position.en.*' => 'nullable|string|max:255',
+            'testimonials_position.ar.*' => 'nullable|string|max:255',
+            'testimonials_stars.en.*' => 'nullable|integer|min:1|max:5',
+            'testimonials_stars.ar.*' => 'nullable|integer|min:1|max:5',
+            'testimonials_text.en.*' => 'nullable|string',
+            'testimonials_text.ar.*' => 'nullable|string',
+            'testimonials_image_en_*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
         ];
     }
 

@@ -11,7 +11,8 @@ class PageCategory extends Model
 
     protected $fillable = ['name'];
 
-    public function pages(){
-        return $this->hasMany(Page::class);
+    public function pages()
+    {
+        return $this->hasMany(Page::class)->orderBy('order');
     }
 }

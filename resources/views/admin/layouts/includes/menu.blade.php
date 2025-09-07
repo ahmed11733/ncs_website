@@ -24,6 +24,12 @@
                         <span>Contact Us Page</span>
                     </a>
                 </li>
+                <li @if(Route::is('admin.dynamicPages.footer*') ) class="mm-active" @endif>
+                    <a href="{{ route('admin.dynamicPages.footer') }}" class="waves-effect">
+                        <i class="bx bx-copyright"></i>
+                        <span>Footer</span>
+                    </a>
+                </li>
                 <li @if(Route::is('admin.events.registrations*') ) class="mm-active" @endif>
                     <a href="{{route('admin.events.registrations')}}" class="waves-effect">
                         <i class="bx bx-calendar-check"></i>
