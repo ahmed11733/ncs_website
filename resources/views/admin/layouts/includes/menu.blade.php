@@ -66,6 +66,12 @@
                         <span>Demo Requests</span>
                     </a>
                 </li>
+                <li @if(Route::is('admin.faqs*')) class="mm-active" @endif>
+                    <a href="{{ route('admin.faqs.index') }}" class="waves-effect">
+                        <i class="bx bx-help-circle"></i>
+                        <span>FAQs</span>
+                    </a>
+                </li>
                 @can('access_drivers_admin')
                     <li class="nav-item @if(Route::is('admin.drivers*')) mm-active @endif">
                         <a class="nav-link" href="#"

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ContactMessageController;
 use App\Http\Controllers\Api\DemoRequestController;
 use App\Http\Controllers\Api\DynamicDataController;
+use App\Http\Controllers\Api\FaqController;
 use App\Http\Controllers\Api\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\EventRegistrationController;
@@ -33,3 +34,5 @@ Route::post('/contact', [ContactMessageController::class, 'store']);
 Route::post('/demo-requests', [DemoRequestController::class, 'store']);
 
 Route::get('/dynamic-data/{page}', DynamicDataController::class);
+
+Route::get('faqs', [FaqController::class, 'index']);

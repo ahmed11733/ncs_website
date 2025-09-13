@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DemoRequestController;
 use App\Http\Controllers\Admin\DynamicPageController;
 use App\Http\Controllers\Admin\EventsController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\PageCategoryController;
 use App\Http\Controllers\Admin\PageController;
@@ -58,6 +59,8 @@ Route::group(['as' => 'admin.', 'prefix' => '/admin'], function () {
             Route::get('/', [DemoRequestController::class, 'index'])->name('index');
             Route::delete('/{demoRequest}', [DemoRequestController::class, 'destroy'])->name('destroy');
         });
+
+        Route::resource('faqs', FaqController::class)->except(['show']);
 
         Route::prefix('/dynamic-pages')->name('dynamicPages.')->group(function () {
             // Home Page Routes
