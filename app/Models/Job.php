@@ -31,4 +31,10 @@ class Job extends Model
     {
         return $this->belongsTo(JobDepartment::class, 'department_id');
     }
+
+    // In app/Models/Job.php
+    public function applications()
+    {
+        return $this->hasMany(JobApplication::class, 'job_id');
+    }
 }

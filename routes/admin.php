@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DemoRequestController;
 use App\Http\Controllers\Admin\DynamicPageController;
 use App\Http\Controllers\Admin\EventsController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\JobApplicationController;
 use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\PageCategoryController;
 use App\Http\Controllers\Admin\PageController;
@@ -41,7 +42,18 @@ Route::group(['as' => 'admin.', 'prefix' => '/admin'], function () {
             Route::get('/edit/{job}', [JobsController::class, 'edit'])->name('edit');
             Route::put('/update/{job}', [JobsController::class, 'update'])->name('update');
             Route::delete('/destroy/{id}', [JobsController::class, 'destroy'])->name('destroy');
+
+            // Job Applications Routes
+            Route::get('/{job}/applications', [JobApplicationController::class, 'index'])
+                ->name('applications.index');
+            Route::get('/{job}/applications/{application}', [JobApplicationController::class, 'show'])
+                ->name('applications.show');
+            Route::delete('/{job}/applications/{application}', [JobApplicationController::class, 'destroy'])
+                ->name('applications.destroy');
+
         });
+
+
 
         Route::resource('page-categories', PageCategoryController::class)
             ->except(['show']);

@@ -67,6 +67,10 @@
                                     <td>{{ \Carbon\Carbon::parse($job->created_at)->locale('en')->translatedFormat('l dS F G:i - Y') }}</td>
                                     <td>
                                         <div class="d-flex gap-3">
+                                            <a href="{{ route('admin.jobs.applications.index', $job) }}"
+                                               title="View Applicants" class="text-info">
+                                                <i class="mdi mdi-account-group font-size-18"></i>
+                                            </a>
                                             <a href="{{ route('admin.jobs.edit', $job) }}" title="Edit" class="text-primary">
                                                 <i class="mdi mdi-pencil font-size-18"></i>
                                             </a>
