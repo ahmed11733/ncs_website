@@ -88,7 +88,7 @@ class DynamicPageController extends Controller
         $validatedData = $request->validated();
 
         // Get existing content or create new structure with proper nested arrays
-        $content = $page->content ?? [];
+        $content = $page->getTranslations('content') ?? [];
 
         // Ensure the content has the proper structure
         if (!isset($content['en']) || !is_array($content['en'])) {
@@ -304,7 +304,9 @@ class DynamicPageController extends Controller
     {
         if ($request->hasFile($fieldName)) {
             // Upload the new file
-            return $this->uploadFile($request->file($fieldName), $folder);
+            $path = $this->uploadFile($request->file($fieldName), $folder);
+
+            return asset($path);
         } elseif (!isset($currentContent[$fieldName]) && isset($existingContent[$fieldName])) {
             // Keep the existing file if no new file is uploaded
             return $existingContent[$fieldName];
@@ -538,7 +540,7 @@ class DynamicPageController extends Controller
         $validatedData = $request->validated();
 
         // Get existing content or create new structure with proper nested arrays
-        $content = $page->content ?? [];
+        $content = $page->getTranslations('content') ?? [];
 
         // Ensure the content has the proper structure
         if (!isset($content['en']) || !is_array($content['en'])) {
@@ -724,7 +726,7 @@ class DynamicPageController extends Controller
         $validatedData = $request->validated();
 
         // Get existing content or create new structure with proper nested arrays
-        $content = $page->content ?? [];
+        $content = $page->getTranslations('content') ?? [];
 
         // Ensure the content has the proper structure
         if (!isset($content['en']) || !is_array($content['en'])) {
