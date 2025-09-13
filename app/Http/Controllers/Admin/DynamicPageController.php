@@ -88,7 +88,7 @@ class DynamicPageController extends Controller
         $validatedData = $request->validated();
 
         // Get existing content or create new structure with proper nested arrays
-        $content = $page->getTranslations('content') ?? [];
+        $content = $page->getTranslations('content')?? [];
 
         // Ensure the content has the proper structure
         if (!isset($content['en']) || !is_array($content['en'])) {
@@ -155,12 +155,11 @@ class DynamicPageController extends Controller
         }
 
         // Handle company logos upload
-        $companyLogosEn = [];
-        $companyLogosAr = [];
+        $companyLogos = [];
         for ($i = 0; $i < 10; $i++) {
             $logoPath = $this->handleSingleFileUpload(
                 $request,
-                "company_logos_en_{$i}",
+                "company_logos_$i",
                 $content['en'], // Current content for reference
                 $content['en'], // Existing content for fallback
                 'home/company-logos'
@@ -171,17 +170,15 @@ class DynamicPageController extends Controller
                 $logoPath = $content['en']['company_logos'][$i] ?? $content['ar']['company_logos'][$i] ?? '';
             }
 
-            $companyLogosEn[] = $logoPath;
-            $companyLogosAr[] = $logoPath; // Same logos for both languages
+            $companyLogos[] = $logoPath;
         }
 
         // Handle industries upload
-        $industriesEn = [];
-        $industriesAr = [];
+        $industriesImages = [];
         for ($i = 0; $i < 8; $i++) {
             $industryImage = $this->handleSingleFileUpload(
                 $request,
-                "industries_image_en_{$i}",
+                "industries_image_$i",
                 $content['en']['industries'][$i] ?? [], // Current industry for reference
                 $content['en']['industries'][$i] ?? [], // Existing industry for fallback
                 'home/industries'
@@ -194,25 +191,18 @@ class DynamicPageController extends Controller
             }
 
             // English industry
-            $industriesEn[] = [
+            $industriesImages[] = [
                 'title' => $validatedData['industries_title']['en'][$i] ?? '',
                 'image' => $industryImage
-            ];
-
-            // Arabic industry
-            $industriesAr[] = [
-                'title' => $validatedData['industries_title']['ar'][$i] ?? '',
-                'image' => $industryImage // Same image for both languages
             ];
         }
 
         // Handle testimonials upload
-        $testimonialsEn = [];
-        $testimonialsAr = [];
+        $testimonialsImages = [];
         for ($i = 0; $i < 5; $i++) {
             $testimonialImage = $this->handleSingleFileUpload(
                 $request,
-                "testimonials_image_en_{$i}",
+                "testimonials_image_$i",
                 $content['en']['testimonials'][$i] ?? [], // Current testimonial for reference
                 $content['en']['testimonials'][$i] ?? [], // Existing testimonial for fallback
                 'home/testimonials'
@@ -225,21 +215,12 @@ class DynamicPageController extends Controller
             }
 
             // English testimonial
-            $testimonialsEn[] = [
+            $testimonialsImages[] = [
                 'name' => $validatedData['testimonials_name']['en'][$i] ?? '',
                 'position' => $validatedData['testimonials_position']['en'][$i] ?? '',
                 'stars' => $validatedData['testimonials_stars']['en'][$i] ?? 5,
                 'text' => $validatedData['testimonials_text']['en'][$i] ?? '',
                 'image' => $testimonialImage
-            ];
-
-            // Arabic testimonial
-            $testimonialsAr[] = [
-                'name' => $validatedData['testimonials_name']['ar'][$i] ?? '',
-                'position' => $validatedData['testimonials_position']['ar'][$i] ?? '',
-                'stars' => $validatedData['testimonials_stars']['ar'][$i] ?? 5,
-                'text' => $validatedData['testimonials_text']['ar'][$i] ?? '',
-                'image' => $testimonialImage // Same image for both languages
             ];
         }
 
@@ -249,19 +230,19 @@ class DynamicPageController extends Controller
             'hero_subtitle' => $validatedData['hero_subtitle']['en'],
             'hero_image' => $heroImage,
             'trusted_companies_heading' => $validatedData['trusted_companies_heading']['en'],
-            'company_logos' => $companyLogosEn,
+            'company_logos' => $companyLogos,
             'about_heading' => $validatedData['about_heading']['en'],
             'about_description' => $validatedData['about_description']['en'],
             'about_image' => $aboutImage,
             'industries_heading' => $validatedData['industries_heading']['en'],
-            'industries' => $industriesEn,
+            'industries' => $industriesImages,
             'video_file' => $videoFile,
             'careers_heading' => $validatedData['careers_heading']['en'],
             'careers_description' => $validatedData['careers_description']['en'],
             'careers_image' => $careersImage,
             'careers_features' => $validatedData['careers_features']['en'] ?? array_fill(0, 6, ''),
             'testimonials_heading' => $validatedData['testimonials_heading']['en'],
-            'testimonials' => $testimonialsEn
+            'testimonials' => $testimonialsImages
         ];
 
         // Update Arabic content
@@ -270,19 +251,19 @@ class DynamicPageController extends Controller
             'hero_subtitle' => $validatedData['hero_subtitle']['ar'],
             'hero_image' => $heroImage, // Same image for both languages
             'trusted_companies_heading' => $validatedData['trusted_companies_heading']['ar'],
-            'company_logos' => $companyLogosAr, // Same logos for both languages
+            'company_logos' => $companyLogos,
             'about_heading' => $validatedData['about_heading']['ar'],
             'about_description' => $validatedData['about_description']['ar'],
             'about_image' => $aboutImage, // Same image for both languages
             'industries_heading' => $validatedData['industries_heading']['ar'],
-            'industries' => $industriesAr,
-            'video_file' => $videoFile, // Same video for both languages
+            'industries' => $industriesImages,
+            'video_file' => $videoFile,
             'careers_heading' => $validatedData['careers_heading']['ar'],
             'careers_description' => $validatedData['careers_description']['ar'],
-            'careers_image' => $careersImage, // Same image for both languages
+            'careers_image' => $careersImage,
             'careers_features' => $validatedData['careers_features']['ar'] ?? array_fill(0, 6, ''),
             'testimonials_heading' => $validatedData['testimonials_heading']['ar'],
-            'testimonials' => $testimonialsAr
+            'testimonials' => $testimonialsImages
         ];
 
         // Make sure we ONLY have the en and ar keys

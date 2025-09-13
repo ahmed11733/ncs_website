@@ -62,7 +62,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Title <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control @error('hero_title.en') is-invalid @enderror" name="hero_title[en]"
-                                                               value="{{ old('hero_title.en', $page->content['en']['hero_title'] ?? 'We Are Here To Hear') }}">
+                                                               value="{{ old('hero_title.en', $page->getTranslation('content', 'en')['hero_title'] ?? 'We Are Here To Hear') }}">
                                                         @error('hero_title.en')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
@@ -70,7 +70,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Subtitle <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control @error('hero_subtitle.en') is-invalid @enderror" name="hero_subtitle[en]"
-                                                               value="{{ old('hero_subtitle.en', $page->content['en']['hero_subtitle'] ?? 'Hero Subtitle') }}">
+                                                               value="{{ old('hero_subtitle.en', $page->getTranslation('content', 'en')['hero_subtitle'] ?? 'Hero Subtitle') }}">
                                                         @error('hero_subtitle.en')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
@@ -86,7 +86,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Title (Arabic) <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control @error('hero_title.ar') is-invalid @enderror" name="hero_title[ar]"
-                                                               value="{{ old('hero_title.ar', $page->content['ar']['hero_title'] ?? 'نحن هنا لنسمع') }}">
+                                                               value="{{ old('hero_title.ar', $page->getTranslation('content', 'ar')['hero_title'] ?? 'نحن هنا لنسمع') }}">
                                                         @error('hero_title.ar')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
@@ -94,7 +94,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Subtitle (Arabic) <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control @error('hero_subtitle.ar') is-invalid @enderror" name="hero_subtitle[ar]"
-                                                               value="{{ old('hero_subtitle.ar', $page->content['ar']['hero_subtitle'] ?? 'العنوان الفرعي') }}">
+                                                               value="{{ old('hero_subtitle.ar', $page->getTranslation('content', 'ar')['hero_subtitle'] ?? 'العنوان الفرعي') }}">
                                                         @error('hero_subtitle.ar')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
@@ -112,9 +112,9 @@
                                                 @error('hero_image')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
-                                                @if(isset($page->content['en']['hero_image']))
+                                                @if(isset($page->getTranslation('content', 'en')['hero_image']))
                                                     <div class="mt-2">
-                                                        <img src="{{ asset($page->content['en']['hero_image']) }}" alt="Hero Image" style="max-width: 200px; max-height: 150px;">
+                                                        <img src="{{ asset($page->getTranslation('content', 'en')['hero_image']) }}" alt="Hero Image" style="max-width: 200px; max-height: 150px;">
                                                         <small class="d-block text-muted">Current image</small>
                                                     </div>
                                                 @endif
@@ -138,7 +138,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Section Heading <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('trusted_companies_heading.en') is-invalid @enderror" name="trusted_companies_heading[en]"
-                                                       value="{{ old('trusted_companies_heading.en', $page->content['en']['trusted_companies_heading'] ?? 'Trusted by 4,000+ companies') }}">
+                                                       value="{{ old('trusted_companies_heading.en', $page->getTranslation('content', 'en')['trusted_companies_heading'] ?? 'Trusted by 4,000+ companies') }}">
                                                 @error('trusted_companies_heading.en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -150,7 +150,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Section Heading (Arabic) <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('trusted_companies_heading.ar') is-invalid @enderror" name="trusted_companies_heading[ar]"
-                                                       value="{{ old('trusted_companies_heading.ar', $page->content['ar']['trusted_companies_heading'] ?? 'يثق بنا أكثر من 4000 شركة') }}">
+                                                       value="{{ old('trusted_companies_heading.ar', $page->getTranslation('content', 'ar')['trusted_companies_heading'] ?? 'يثق بنا أكثر من 4000 شركة') }}">
                                                 @error('trusted_companies_heading.ar')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -163,13 +163,13 @@
                                         @for($i = 0; $i < 10; $i++)
                                             <div class="col-md-4 mb-3">
                                                 <label class="form-label">Company Logo {{ $i + 1 }}</label>
-                                                <input type="file" class="form-control @error('company_logos.' . $i) is-invalid @enderror" name="company_logos[]" accept="image/*">
+                                                <input type="file" class="form-control @error('company_logos.' . $i) is-invalid @enderror" name="company_logos_{{$i}}" accept="image/*">
                                                 @error('company_logos.' . $i)
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
-                                                @if(isset($page->content['en']['company_logos'][$i]))
+                                                @if(isset($page->getTranslation('content', 'en')['company_logos'][$i]))
                                                     <div class="mt-2">
-                                                        <img src="{{ asset($page->content['en']['company_logos'][$i]) }}" alt="Company Logo" style="max-width: 100px; max-height: 60px;">
+                                                        <img src="{{ asset($page->getTranslation('content', 'en')['company_logos'][$i]) }}" alt="Company Logo" style="max-width: 100px; max-height: 60px;">
                                                         <small class="d-block text-muted">Current logo</small>
                                                     </div>
                                                 @endif
@@ -193,14 +193,14 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Heading <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('about_heading.en') is-invalid @enderror" name="about_heading[en]"
-                                                       value="{{ old('about_heading.en', $page->content['en']['about_heading'] ?? 'About Us') }}">
+                                                       value="{{ old('about_heading.en', $page->getTranslation('content', 'en')['about_heading'] ?? 'About Us') }}">
                                                 @error('about_heading.en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Description <span class="text-danger">*</span></label>
-                                                <textarea class="form-control @error('about_description.en') is-invalid @enderror" name="about_description[en]" rows="4">{{ old('about_description.en', $page->content['en']['about_description'] ?? 'Lorem Ipsum is simply dummy text...') }}</textarea>
+                                                <textarea class="form-control @error('about_description.en') is-invalid @enderror" name="about_description[en]" rows="4">{{ old('about_description.en', $page->getTranslation('content', 'en')['about_description'] ?? 'Lorem Ipsum is simply dummy text...') }}</textarea>
                                                 @error('about_description.en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -212,14 +212,14 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Heading (Arabic) <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('about_heading.ar') is-invalid @enderror" name="about_heading[ar]"
-                                                       value="{{ old('about_heading.ar', $page->content['ar']['about_heading'] ?? 'من نحن') }}">
+                                                       value="{{ old('about_heading.ar', $page->getTranslation('content', 'ar')['about_heading'] ?? 'من نحن') }}">
                                                 @error('about_heading.ar')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Description (Arabic) <span class="text-danger">*</span></label>
-                                                <textarea class="form-control @error('about_description.ar') is-invalid @enderror" name="about_description[ar]" rows="4">{{ old('about_description.ar', $page->content['ar']['about_description'] ?? 'لوريم إيبسوم هو ببساطة نص شكلي...') }}</textarea>
+                                                <textarea class="form-control @error('about_description.ar') is-invalid @enderror" name="about_description[ar]" rows="4">{{ old('about_description.ar', $page->getTranslation('content', 'ar')['about_description'] ?? 'لوريم إيبسوم هو ببساطة نص شكلي...') }}</textarea>
                                                 @error('about_description.ar')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -233,9 +233,9 @@
                                         @error('about_image')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
-                                        @if(isset($page->content['en']['about_image']))
+                                        @if(isset($page->getTranslation('content', 'en')['about_image']))
                                             <div class="mt-2">
-                                                <img src="{{ asset($page->content['en']['about_image']) }}" alt="About Image" style="max-width: 200px; max-height: 150px;">
+                                                <img src="{{ asset($page->getTranslation('content', 'en')['about_image']) }}" alt="About Image" style="max-width: 200px; max-height: 150px;">
                                                 <small class="d-block text-muted">Current image</small>
                                             </div>
                                         @endif
@@ -257,7 +257,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Section Heading <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('industries_heading.en') is-invalid @enderror" name="industries_heading[en]"
-                                                       value="{{ old('industries_heading.en', $page->content['en']['industries_heading'] ?? 'we are industry first') }}">
+                                                       value="{{ old('industries_heading.en', $page->getTranslation('content', 'en')['industries_heading'] ?? 'we are industry first') }}">
                                                 @error('industries_heading.en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -269,7 +269,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Section Heading (Arabic) <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('industries_heading.ar') is-invalid @enderror" name="industries_heading[ar]"
-                                                       value="{{ old('industries_heading.ar', $page->content['ar']['industries_heading'] ?? 'نحن أولاً في الصناعة') }}">
+                                                       value="{{ old('industries_heading.ar', $page->getTranslation('content', 'ar')['industries_heading'] ?? 'نحن أولاً في الصناعة') }}">
                                                 @error('industries_heading.ar')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -294,7 +294,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Title <span class="text-danger">*</span></label>
                                                             <input type="text" class="form-control @error('industries_title.en.' . $i) is-invalid @enderror" name="industries_title[en][{{$i}}]"
-                                                                   value="{{ old('industries_title.en.' . $i, $page->content['en']['industries'][$i]['title'] ?? '') }}">
+                                                                   value="{{ old('industries_title.en.' . $i, $page->getTranslation('content', 'en')['industries'][$i]['title'] ?? '') }}">
                                                             @error('industries_title.en.' . $i)
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
@@ -306,7 +306,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Title (Arabic) <span class="text-danger">*</span></label>
                                                             <input type="text" class="form-control @error('industries_title.ar.' . $i) is-invalid @enderror" name="industries_title[ar][{{$i}}]"
-                                                                   value="{{ old('industries_title.ar.' . $i, $page->content['ar']['industries'][$i]['title'] ?? '') }}">
+                                                                   value="{{ old('industries_title.ar.' . $i, $page->getTranslation('content', 'ar')['industries'][$i]['title'] ?? '') }}">
                                                             @error('industries_title.ar.' . $i)
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
@@ -316,13 +316,13 @@
 
                                                 <div class="mb-3">
                                                     <label class="form-label">Image</label>
-                                                    <input type="file" class="form-control @error('industries_image.' . $i) is-invalid @enderror" name="industries_image[{{$i}}]" accept="image/*">
+                                                    <input type="file" class="form-control @error('industries_image.' . $i) is-invalid @enderror" name="industries_image_{{$i}}" accept="image/*">
                                                     @error('industries_image.' . $i)
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    @if(isset($page->content['en']['industries'][$i]['image']))
+                                                    @if(isset($page->getTranslation('content', 'en')['industries'][$i]['image']))
                                                         <div class="mt-2">
-                                                            <img src="{{ asset($page->content['en']['industries'][$i]['image']) }}" alt="Industry Image" style="max-width: 100px; max-height: 60px;">
+                                                            <img src="{{ asset($page->getTranslation('content', 'en')['industries'][$i]['image']) }}" alt="Industry Image" style="max-width: 100px; max-height: 60px;">
                                                             <small class="d-block text-muted">Current image</small>
                                                         </div>
                                                     @endif
@@ -341,9 +341,9 @@
                                         @error('video_file')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
-                                        @if(isset($page->content['en']['video_file']))
+                                        @if(isset($page->getTranslation('content', 'en')['video_file']))
                                             <div class="mt-2">
-                                                <video src="{{ asset($page->content['en']['video_file']) }}" controls style="max-width: 200px; max-height: 150px;"></video>
+                                                <video src="{{ asset($page->getTranslation('content', 'en')['video_file']) }}" controls style="max-width: 200px; max-height: 150px;"></video>
                                                 <small class="d-block text-muted">Current video</small>
                                             </div>
                                         @endif
@@ -365,14 +365,14 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Heading <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('careers_heading.en') is-invalid @enderror" name="careers_heading[en]"
-                                                       value="{{ old('careers_heading.en', $page->content['en']['careers_heading'] ?? 'Careers') }}">
+                                                       value="{{ old('careers_heading.en', $page->getTranslation('content', 'en')['careers_heading'] ?? 'Careers') }}">
                                                 @error('careers_heading.en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Description <span class="text-danger">*</span></label>
-                                                <textarea class="form-control @error('careers_description.en') is-invalid @enderror" name="careers_description[en]" rows="4">{{ old('careers_description.en', $page->content['en']['careers_description'] ?? 'We Can Help You To Grow Your Business...') }}</textarea>
+                                                <textarea class="form-control @error('careers_description.en') is-invalid @enderror" name="careers_description[en]" rows="4">{{ old('careers_description.en', $page->getTranslation('content', 'en')['careers_description'] ?? 'We Can Help You To Grow Your Business...') }}</textarea>
                                                 @error('careers_description.en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -383,7 +383,7 @@
                                                 <div class="mb-2">
                                                     <label class="form-label">Feature {{ $i + 1 }}</label>
                                                     <input type="text" class="form-control @error('careers_features.en.' . $i) is-invalid @enderror" name="careers_features[en][{{$i}}]"
-                                                           value="{{ old('careers_features.en.' . $i, $page->content['en']['careers_features'][$i] ?? '') }}">
+                                                           value="{{ old('careers_features.en.' . $i, $page->getTranslation('content', 'en')['careers_features'][$i] ?? '') }}">
                                                     @error('careers_features.en.' . $i)
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
@@ -396,14 +396,14 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Heading (Arabic) <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('careers_heading.ar') is-invalid @enderror" name="careers_heading[ar]"
-                                                       value="{{ old('careers_heading.ar', $page->content['ar']['careers_heading'] ?? 'الوظائف') }}">
+                                                       value="{{ old('careers_heading.ar', $page->getTranslation('content', 'ar')['careers_heading'] ?? 'الوظائف') }}">
                                                 @error('careers_heading.ar')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Description (Arabic) <span class="text-danger">*</span></label>
-                                                <textarea class="form-control @error('careers_description.ar') is-invalid @enderror" name="careers_description[ar]" rows="4">{{ old('careers_description.ar', $page->content['ar']['careers_description'] ?? 'يمكننا مساعدتك في تنمية عملك...') }}</textarea>
+                                                <textarea class="form-control @error('careers_description.ar') is-invalid @enderror" name="careers_description[ar]" rows="4">{{ old('careers_description.ar', $page->getTranslation('content', 'ar')['careers_description'] ?? 'يمكننا مساعدتك في تنمية عملك...') }}</textarea>
                                                 @error('careers_description.ar')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -414,7 +414,7 @@
                                                 <div class="mb-2">
                                                     <label class="form-label">Feature {{ $i + 1 }}</label>
                                                     <input type="text" class="form-control @error('careers_features.ar.' . $i) is-invalid @enderror" name="careers_features[ar][{{$i}}]"
-                                                           value="{{ old('careers_features.ar.' . $i, $page->content['ar']['careers_features'][$i] ?? '') }}">
+                                                           value="{{ old('careers_features.ar.' . $i, $page->getTranslation('content', 'ar')['careers_features'][$i] ?? '') }}">
                                                     @error('careers_features.ar.' . $i)
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
@@ -429,9 +429,9 @@
                                         @error('careers_image')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
-                                        @if(isset($page->content['en']['careers_image']))
+                                        @if(isset($page->getTranslation('content', 'en')['careers_image']))
                                             <div class="mt-2">
-                                                <img src="{{ asset($page->content['en']['careers_image']) }}" alt="Careers Image" style="max-width: 200px; max-height: 150px;">
+                                                <img src="{{ asset($page->getTranslation('content', 'en')['careers_image']) }}" alt="Careers Image" style="max-width: 200px; max-height: 150px;">
                                                 <small class="d-block text-muted">Current image</small>
                                             </div>
                                         @endif
@@ -453,7 +453,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Section Heading <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('testimonials_heading.en') is-invalid @enderror" name="testimonials_heading[en]"
-                                                       value="{{ old('testimonials_heading.en', $page->content['en']['testimonials_heading'] ?? 'Testimonials') }}">
+                                                       value="{{ old('testimonials_heading.en', $page->getTranslation('content', 'en')['testimonials_heading'] ?? 'Testimonials') }}">
                                                 @error('testimonials_heading.en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -465,7 +465,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Section Heading (Arabic) <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control @error('testimonials_heading.ar') is-invalid @enderror" name="testimonials_heading[ar]"
-                                                       value="{{ old('testimonials_heading.ar', $page->content['ar']['testimonials_heading'] ?? 'آراء العملاء') }}">
+                                                       value="{{ old('testimonials_heading.ar', $page->getTranslation('content', 'ar')['testimonials_heading'] ?? 'آراء العملاء') }}">
                                                 @error('testimonials_heading.ar')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -492,7 +492,7 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Name <span class="text-danger">*</span></label>
                                                                     <input type="text" class="form-control @error('testimonials_name.en.' . $i) is-invalid @enderror" name="testimonials_name[en][{{$i}}]"
-                                                                           value="{{ old('testimonials_name.en.' . $i, $page->content['en']['testimonials'][$i]['name'] ?? '') }}">
+                                                                           value="{{ old('testimonials_name.en.' . $i, $page->getTranslation('content', 'en')['testimonials'][$i]['name'] ?? '') }}">
                                                                     @error('testimonials_name.en.' . $i)
                                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                                     @enderror
@@ -500,7 +500,7 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Position <span class="text-danger">*</span></label>
                                                                     <input type="text" class="form-control @error('testimonials_position.en.' . $i) is-invalid @enderror" name="testimonials_position[en][{{$i}}]"
-                                                                           value="{{ old('testimonials_position.en.' . $i, $page->content['en']['testimonials'][$i]['position'] ?? '') }}">
+                                                                           value="{{ old('testimonials_position.en.' . $i, $page->getTranslation('content', 'en')['testimonials'][$i]['position'] ?? '') }}">
                                                                     @error('testimonials_position.en.' . $i)
                                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                                     @enderror
@@ -509,7 +509,7 @@
                                                                     <label class="form-label">Stars (1-5) <span class="text-danger">*</span></label>
                                                                     <select class="form-control @error('testimonials_stars.en.' . $i) is-invalid @enderror" name="testimonials_stars[en][{{$i}}]">
                                                                         @for($star = 1; $star <= 5; $star++)
-                                                                            <option value="{{ $star }}" {{ old('testimonials_stars.en.' . $i, $page->content['en']['testimonials'][$i]['stars'] ?? 5) == $star ? 'selected' : '' }}>
+                                                                            <option value="{{ $star }}" {{ old('testimonials_stars.en.' . $i, $page->getTranslation('content', 'en')['testimonials'][$i]['stars'] ?? 5) == $star ? 'selected' : '' }}>
                                                                                 {{ $star }} Star{{ $star > 1 ? 's' : '' }}
                                                                             </option>
                                                                         @endfor
@@ -522,7 +522,7 @@
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Testimonial Text <span class="text-danger">*</span></label>
-                                                                    <textarea class="form-control @error('testimonials_text.en.' . $i) is-invalid @enderror" name="testimonials_text[en][{{$i}}]" rows="4">{{ old('testimonials_text.en.' . $i, $page->content['en']['testimonials'][$i]['text'] ?? '') }}</textarea>
+                                                                    <textarea class="form-control @error('testimonials_text.en.' . $i) is-invalid @enderror" name="testimonials_text[en][{{$i}}]" rows="4">{{ old('testimonials_text.en.' . $i, $page->getTranslation('content', 'en')['testimonials'][$i]['text'] ?? '') }}</textarea>
                                                                     @error('testimonials_text.en.' . $i)
                                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                                     @enderror
@@ -538,7 +538,7 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Name (Arabic) <span class="text-danger">*</span></label>
                                                                     <input type="text" class="form-control @error('testimonials_name.ar.' . $i) is-invalid @enderror" name="testimonials_name[ar][{{$i}}]"
-                                                                           value="{{ old('testimonials_name.ar.' . $i, $page->content['ar']['testimonials'][$i]['name'] ?? '') }}">
+                                                                           value="{{ old('testimonials_name.ar.' . $i, $page->getTranslation('content', 'ar')['testimonials'][$i]['name'] ?? '') }}">
                                                                     @error('testimonials_name.ar.' . $i)
                                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                                     @enderror
@@ -546,7 +546,7 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Position (Arabic) <span class="text-danger">*</span></label>
                                                                     <input type="text" class="form-control @error('testimonials_position.ar.' . $i) is-invalid @enderror" name="testimonials_position[ar][{{$i}}]"
-                                                                           value="{{ old('testimonials_position.ar.' . $i, $page->content['ar']['testimonials'][$i]['position'] ?? '') }}">
+                                                                           value="{{ old('testimonials_position.ar.' . $i, $page->getTranslation('content', 'ar')['testimonials'][$i]['position'] ?? '') }}">
                                                                     @error('testimonials_position.ar.' . $i)
                                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                                     @enderror
@@ -555,7 +555,7 @@
                                                                     <label class="form-label">Stars (1-5) <span class="text-danger">*</span></label>
                                                                     <select class="form-control @error('testimonials_stars.ar.' . $i) is-invalid @enderror" name="testimonials_stars[ar][{{$i}}]">
                                                                         @for($star = 1; $star <= 5; $star++)
-                                                                            <option value="{{ $star }}" {{ old('testimonials_stars.ar.' . $i, $page->content['ar']['testimonials'][$i]['stars'] ?? 5) == $star ? 'selected' : '' }}>
+                                                                            <option value="{{ $star }}" {{ old('testimonials_stars.ar.' . $i, $page->getTranslation('content', 'ar')['testimonials'][$i]['stars'] ?? 5) == $star ? 'selected' : '' }}>
                                                                                 {{ $star }} Star{{ $star > 1 ? 's' : '' }}
                                                                             </option>
                                                                         @endfor
@@ -568,7 +568,7 @@
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Testimonial Text (Arabic) <span class="text-danger">*</span></label>
-                                                                    <textarea class="form-control @error('testimonials_text.ar.' . $i) is-invalid @enderror" name="testimonials_text[ar][{{$i}}]" rows="4">{{ old('testimonials_text.ar.' . $i, $page->content['ar']['testimonials'][$i]['text'] ?? '') }}</textarea>
+                                                                    <textarea class="form-control @error('testimonials_text.ar.' . $i) is-invalid @enderror" name="testimonials_text[ar][{{$i}}]" rows="4">{{ old('testimonials_text.ar.' . $i, $page->getTranslation('content', 'ar')['testimonials'][$i]['text'] ?? '') }}</textarea>
                                                                     @error('testimonials_text.ar.' . $i)
                                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                                     @enderror
@@ -580,13 +580,13 @@
 
                                                 <div class="mb-3">
                                                     <label class="form-label">Avatar Image</label>
-                                                    <input type="file" class="form-control @error('testimonials_image.' . $i) is-invalid @enderror" name="testimonials_image[{{$i}}]" accept="image/*">
+                                                    <input type="file" class="form-control @error('testimonials_image.' . $i) is-invalid @enderror" name="testimonials_image_{{$i}}" accept="image/*">
                                                     @error('testimonials_image.' . $i)
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
-                                                    @if(isset($page->content['en']['testimonials'][$i]['image']))
+                                                    @if(isset($page->getTranslation('content', 'en')['testimonials'][$i]['image']))
                                                         <div class="mt-2">
-                                                            <img src="{{ asset($page->content['en']['testimonials'][$i]['image']) }}" alt="Avatar" style="max-width: 80px; max-height: 80px; border-radius: 50%;">
+                                                            <img src="{{ asset($page->getTranslation('content', 'en')['testimonials'][$i]['image']) }}" alt="Avatar" style="max-width: 80px; max-height: 80px; border-radius: 50%;">
                                                             <small class="d-block text-muted">Current avatar</small>
                                                         </div>
                                                     @endif
