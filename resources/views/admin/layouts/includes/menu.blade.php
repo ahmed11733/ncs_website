@@ -42,6 +42,18 @@
                         <span key="t-chat">Jobs</span>
                     </a>
                 </li>
+                <li @if(Route::is('admin.dynamicPages.events*') ) class="mm-active" @endif>
+                    <a href="{{route('admin.dynamicPages.events')}}" class="waves-effect">
+                        <i class="bx bx-calendar-event"></i>
+                        <span key="t-events">Events</span>
+                    </a>
+                </li>
+                <li @if(Route::is('admin.dynamicPages.career*') ) class="mm-active" @endif>
+                    <a href="{{route('admin.dynamicPages.career')}}" class="waves-effect">
+                        <i class="bx bx-briefcase-alt"></i>
+                        <span key="t-career">Career</span>
+                    </a>
+                </li>
                 <li @if(Route::is('admin.page-categories.index*') ) class="mm-active" @endif>
                     <a href="{{route('admin.page-categories.index')}}" class="waves-effect">
                         <i class="bx bx-collection"></i>
@@ -72,32 +84,6 @@
                         <span>FAQs</span>
                     </a>
                 </li>
-                @can('access_drivers_admin')
-                    <li class="nav-item @if(Route::is('admin.drivers*')) mm-active @endif">
-                        <a class="nav-link" href="#"
-                           style="display: flex; justify-content: space-between; align-items: center;">
-                                <span>
-                                    <i class="bx bx-car"></i> <!-- Car Icon for Drivers -->
-                                    <span key="t-chat">السائقين</span>
-                                </span>
-                            <i class="bx bx-chevron-down" style="font-size: 16px;"></i> <!-- Arrow Icon for dropdown -->
-                        </a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a class="nav-link" href="{{ route('admin.drivers.index') }}">
-                                    <i class="bx bx-id-card"></i> <!-- ID Card Icon for All Drivers -->
-                                    كل السائقين
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="{{ route('admin.drivers_requests.index') }}">
-                                    <i class="bx bx-paper-plane"></i> <!-- Paper Plane Icon for Driver Requests -->
-                                    طلبات السائقين
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                @endcan
             </ul>
         </div>
         <!-- Sidebar -->

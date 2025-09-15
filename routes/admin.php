@@ -87,6 +87,12 @@ Route::group(['as' => 'admin.', 'prefix' => '/admin'], function () {
             Route::get('/contact', [DynamicPageController::class, 'contactEdit'])->name('contact');
             Route::post('/contact', [DynamicPageController::class, 'contactUpdate'])->name('contact.update');
 
+            Route::get('/events', [DynamicPageController::class, 'eventsEdit'])->name('events');
+            Route::post('/events', [DynamicPageController::class, 'eventsUpdate'])->name('events.update');
+
+            Route::get('/career', [DynamicPageController::class, 'careerEdit'])->name('career');
+            Route::post('/career', [DynamicPageController::class, 'careerUpdate'])->name('career.update');
+
             // Footer Routes
             Route::get('/footer', [DynamicPageController::class, 'footerEdit'])->name('footer');
             Route::post('/footer', [DynamicPageController::class, 'footerUpdate'])->name('footer.update');

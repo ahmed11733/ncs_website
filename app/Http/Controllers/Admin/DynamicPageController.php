@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateAboutPageRequest;
+use App\Http\Requests\Admin\UpdateCareerPageRequest;
 use App\Http\Requests\Admin\UpdateContactPageRequest;
+use App\Http\Requests\Admin\UpdateEventsPageRequest;
 use App\Http\Requests\Admin\UpdateFooterPageRequest;
 use App\Http\Requests\Admin\UpdateHomePageRequest;
 use App\Models\DynamicPage;
@@ -295,77 +297,6 @@ class DynamicPageController extends Controller
 
         // Return empty string if no file exists
         return '';
-    }
-
-    /**
-     * Handle company logos array upload
-     */
-    private function handleCompanyLogosUpload($request, $content, $existingContent)
-    {
-        if ($request->hasFile('company_logos')) {
-            foreach ($request->file('company_logos') as $index => $file) {
-                if ($file) {
-                    $content['company_logos'][$index] = $this->uploadFile($file, 'companies');
-                }
-            }
-        } elseif (!isset($content['company_logos']) && isset($existingContent['company_logos'])) {
-            $content['company_logos'] = $existingContent['company_logos'];
-        }
-
-        return $content;
-    }
-
-    /**
-     * Handle industries array upload
-     */
-    private function handleIndustriesUpload($request, $content, $existingContent)
-    {
-        if ($request->has('industries')) {
-            foreach ($request->industries as $index => $industry) {
-                $content['industries'][$index]['title'] = $industry['title'];
-
-                if ($request->hasFile("industries.$index.image")) {
-                    $content['industries'][$index]['image'] = $this->uploadFile(
-                        $request->file("industries.$index.image"),
-                        'industries'
-                    );
-                } elseif (isset($existingContent['industries'][$index]['image'])) {
-                    $content['industries'][$index]['image'] = $existingContent['industries'][$index]['image'];
-                }
-            }
-        } elseif (!isset($content['industries']) && isset($existingContent['industries'])) {
-            $content['industries'] = $existingContent['industries'];
-        }
-
-        return $content;
-    }
-
-    /**
-     * Handle testimonials array upload
-     */
-    private function handleTestimonialsUpload($request, $content, $existingContent)
-    {
-        if ($request->has('testimonials')) {
-            foreach ($request->testimonials as $index => $testimonial) {
-                $content['testimonials'][$index]['name'] = $testimonial['name'];
-                $content['testimonials'][$index]['position'] = $testimonial['position'];
-                $content['testimonials'][$index]['text'] = $testimonial['text'];
-                $content['testimonials'][$index]['stars'] = $testimonial['stars'];
-
-                if ($request->hasFile("testimonials.$index.image")) {
-                    $content['testimonials'][$index]['image'] = $this->uploadFile(
-                        $request->file("testimonials.$index.image"),
-                        'testimonials'
-                    );
-                } elseif (isset($existingContent['testimonials'][$index]['image'])) {
-                    $content['testimonials'][$index]['image'] = $existingContent['testimonials'][$index]['image'];
-                }
-            }
-        } elseif (!isset($content['testimonials']) && isset($existingContent['testimonials'])) {
-            $content['testimonials'] = $existingContent['testimonials'];
-        }
-
-        return $content;
     }
 
     /**
@@ -856,5 +787,319 @@ class DynamicPageController extends Controller
 
         return redirect()->route('admin.dynamicPages.footer')
             ->with('success', 'Footer content updated successfully!');
+    }
+
+    public function eventsEdit()
+    {
+        $page = DynamicPage::firstOrNew(['page_key' => 'events']);
+
+        // If content is empty or not in the expected format, initialize it
+        if (empty($page->content) || !isset($page->content)) {
+            $page->content = [
+                'en' => [
+                    // Hero Section
+                    'hero_title' => 'Where Technology Meets Opportunity',
+                    'hero_subtitle' => 'Explore our latest events, workshops, and summits designed to inspire and connect tech leaders.',
+                    'hero_image' => '',
+
+                    // Main Content Section
+                    'main_title' => 'Unmissable Experiences for Every Tech Enthusiast',
+                    'main_description' => 'Discover our upcoming events designed to keep you at the forefront of technology. From conferences and webinars to hands-on workshops, each experience is crafted to inspire innovation, build expertise, and connect you with industry leaders and lead with confidence in a rapidly evolving digital world.',
+
+                    // Learning Objectives
+                    'learning_title' => 'What will you learn?',
+                    'learning_points' => [
+                        'Gain the skills you need to lead in the digital age',
+                        'Walk away with practical insights you can apply immediately.',
+                        'Be ready to turn knowledge into action.',
+                        'Expand your expertise and stay ahead in a fast-changing tech world.',
+                        'From theory to application — we help you make the leap.',
+                        'Analyzing the project and business model and knowing the customer\'s needs by conducting interviews with officials and stakeholder.'
+                    ],
+
+                    // Featured Event
+                    'featured_event_title' => 'Tech Innovation Day 2025',
+                    'featured_event_date' => 'Jul.12.2025',
+                    'featured_event_time' => 'From 4:00 PM To 8PM',
+                    'featured_event_location' => 'Online',
+                    'featured_event_description' => 'An interactive event bringing together technology experts and enthusiasts to explore the trends shaping tomorrow. Attend keynotes, join workshops, and network with industry professionals.',
+                    'featured_event_image' => '',
+
+                    // Event Card
+                    'event_card_time_text' => '01 hr 2 mins',
+                    'event_card_title' => 'Future of Tech: Live Event',
+                    'event_card_date' => 'Jul.12.2025 /4:00 PM',
+                    'event_card_location' => 'Online',
+                    'event_card_description' => 'An interactive event bringing together technology experts and enthusiasts to explore the trends shaping tomorrow. Attend keynotes, join workshops, and network with industry professionals.',
+                    'event_card_rating' => 4.3,
+                    'event_card_raters_count' => 16325,
+                    'event_card_image' => '',
+                ],
+                'ar' => [
+                    // Hero Section
+                    'hero_title' => 'حيث تلتقي التكنولوجيا بالفرصة',
+                    'hero_subtitle' => 'استكشف أحدث فعالياتنا وورش العمل والقمم المصممة لإلهام وقادة التكنولوجيا.',
+                    'hero_image' => '',
+
+                    // Main Content Section
+                    'main_title' => 'تجارب لا يمكن تفويتها لكل محبي التكنولوجيا',
+                    'main_description' => 'اكتشف فعالياتنا القادمة المصممة لإبقائك في طليعة التكنولوجيا. من المؤتمرات والندوات عبر الإنترنت إلى ورش العمل العملية، تم تصميم كل تجربة لإلهام الابتكار وبناء الخبرة وتوصلك بقادة الصناعة.',
+
+                    // Learning Objectives
+                    'learning_title' => 'ماذا سوف تتعلم؟',
+                    'learning_points' => [
+                        'اكتسب المهارات التي تحتاجها للقيادة في العصر الرقمي',
+                        'اغتنم رؤى عملية يمكنك تطبيقها على الفور.',
+                        'كن مستعدًا لتحويل المعرفة إلى عمل.',
+                        'وسع خبرتك وابقَ في المقدمة في عالم التكنولوجيا سريع التغير.',
+                        'من النظرية إلى التطبيق - نحن نساعدك على القفزة.',
+                        'تحليل المشروع ونموذج العمل ومعرفة احتياجات العملاء من خلال إجراء مقابلات مع المسؤولين وأصحاب المصلحة.'
+                    ],
+
+                    // Featured Event
+                    'featured_event_title' => 'يوم الابتكار التكنولوجي 2025',
+                    'featured_event_date' => '12 يوليو 2025',
+                    'featured_event_time' => 'من 4:00 مساءً إلى 8:00 مساءً',
+                    'featured_event_location' => 'عبر الإنترنت',
+                    'featured_event_description' => 'فعالية تفاعلية تجمع بين خبراء التكنولوجيا والمتحمسين لاستكشاف الاتجاهات التي تشكل الغد. احضر المحاضرات الرئيسية وانضم إلى ورش العمل وتواصل مع المحترفين في الصناعة.',
+                    'featured_event_image' => '',
+
+                    // Event Card
+                    'event_card_time_text' => 'ساعة واحدة ودقيقتان',
+                    'event_card_title' => 'مستقبل التكنولوجيا: حدث مباشر',
+                    'event_card_date' => '12 يوليو 2025 / 4:00 مساءً',
+                    'event_card_location' => 'عبر الإنترنت',
+                    'event_card_description' => 'فعالية تفاعلية تجمع بين خبراء التكنولوجيا والمتحمسين لاستكشاف الاتجاهات التي تشكل الغد. احضر المحاضرات الرئيسية وانضم إلى ورش العمل وتواصل مع المحترفين في الصناعة.',
+                    'event_card_rating' => 4.3,
+                    'event_card_raters_count' => 16325,
+                    'event_card_image' => '',
+                ]
+            ];
+            $page->save();
+        }
+
+        return view('admin.pages.dynamicPages.events', compact('page'));
+    }
+
+    public function eventsUpdate(UpdateEventsPageRequest $request)
+    {
+        $page = DynamicPage::firstOrNew(['page_key' => 'events']);
+        $validatedData = $request->validated();
+
+        // Get existing content or create new structure with proper nested arrays
+        $content = $page->getTranslations('content') ?? [];
+
+        // Ensure the content has the proper structure
+        if (!isset($content['en']) || !is_array($content['en'])) {
+            $content['en'] = [];
+        }
+        if (!isset($content['ar']) || !is_array($content['ar'])) {
+            $content['ar'] = [];
+        }
+
+        // Handle hero image upload
+        $heroImage = $this->handleSingleFileUpload(
+            $request,
+            'hero_image',
+            $content['en'],
+            $content['en'],
+            'events/hero'
+        );
+
+        // If no new hero image uploaded, try to get from existing content
+        if (empty($heroImage)) {
+            $heroImage = $content['en']['hero_image'] ?? $content['ar']['hero_image'] ?? '';
+        }
+
+        // Handle featured event image upload
+        $featuredEventImage = $this->handleSingleFileUpload(
+            $request,
+            'featured_event_image',
+            $content['en'],
+            $content['en'],
+            'events/featured'
+        );
+
+        // If no new featured event image uploaded, try to get from existing content
+        if (empty($featuredEventImage)) {
+            $featuredEventImage = $content['en']['featured_event_image'] ?? $content['ar']['featured_event_image'] ?? '';
+        }
+
+        // Handle event card image upload
+        $eventCardImage = $this->handleSingleFileUpload(
+            $request,
+            'event_card_image',
+            $content['en'],
+            $content['en'],
+            'events/card'
+        );
+
+        // If no new event card image uploaded, try to get from existing content
+        if (empty($eventCardImage)) {
+            $eventCardImage = $content['en']['event_card_image'] ?? $content['ar']['event_card_image'] ?? '';
+        }
+
+        // Update English content
+        $content['en'] = [
+            // Hero Section
+            'hero_title' => $validatedData['hero_title']['en'],
+            'hero_subtitle' => $validatedData['hero_subtitle']['en'],
+            'hero_image' => $heroImage,
+
+            // Main Content Section
+            'main_title' => $validatedData['main_title']['en'],
+            'main_description' => $validatedData['main_description']['en'],
+
+            // Learning Objectives
+            'learning_title' => $validatedData['learning_title']['en'],
+            'learning_points' => $validatedData['learning_points']['en'],
+
+            // Featured Event
+            'featured_event_title' => $validatedData['featured_event_title']['en'],
+            'featured_event_date' => $validatedData['featured_event_date']['en'],
+            'featured_event_time' => $validatedData['featured_event_time']['en'],
+            'featured_event_location' => $validatedData['featured_event_location']['en'],
+            'featured_event_description' => $validatedData['featured_event_description']['en'],
+            'featured_event_image' => $featuredEventImage,
+
+            // Event Card
+            'event_card_time_text' => $validatedData['event_card_time_text']['en'],
+            'event_card_title' => $validatedData['event_card_title']['en'],
+            'event_card_date' => $validatedData['event_card_date']['en'],
+            'event_card_location' => $validatedData['event_card_location']['en'],
+            'event_card_description' => $validatedData['event_card_description']['en'],
+            'event_card_rating' => $validatedData['event_card_rating'],
+            'event_card_raters_count' => $validatedData['event_card_raters_count'],
+            'event_card_image' => $eventCardImage,
+        ];
+
+        // Update Arabic content
+        $content['ar'] = [
+            // Hero Section
+            'hero_title' => $validatedData['hero_title']['ar'],
+            'hero_subtitle' => $validatedData['hero_subtitle']['ar'],
+            'hero_image' => $heroImage, // Same image for both languages
+
+            // Main Content Section
+            'main_title' => $validatedData['main_title']['ar'],
+            'main_description' => $validatedData['main_description']['ar'],
+
+            // Learning Objectives
+            'learning_title' => $validatedData['learning_title']['ar'],
+            'learning_points' => $validatedData['learning_points']['ar'],
+
+            // Featured Event
+            'featured_event_title' => $validatedData['featured_event_title']['ar'],
+            'featured_event_date' => $validatedData['featured_event_date']['ar'],
+            'featured_event_time' => $validatedData['featured_event_time']['ar'],
+            'featured_event_location' => $validatedData['featured_event_location']['ar'],
+            'featured_event_description' => $validatedData['featured_event_description']['ar'],
+            'featured_event_image' => $featuredEventImage, // Same image for both languages
+
+            // Event Card
+            'event_card_time_text' => $validatedData['event_card_time_text']['ar'],
+            'event_card_title' => $validatedData['event_card_title']['ar'],
+            'event_card_date' => $validatedData['event_card_date']['ar'],
+            'event_card_location' => $validatedData['event_card_location']['ar'],
+            'event_card_description' => $validatedData['event_card_description']['ar'],
+            'event_card_rating' => $validatedData['event_card_rating'],
+            'event_card_raters_count' => $validatedData['event_card_raters_count'],
+            'event_card_image' => $eventCardImage, // Same image for both languages
+        ];
+
+        // Make sure we ONLY have the en and ar keys
+        $page->content = [
+            'en' => $content['en'],
+            'ar' => $content['ar']
+        ];
+
+        $page->save();
+
+        return redirect()->route('admin.dynamicPages.events')
+            ->with('success', 'Events page content updated successfully!');
+    }
+
+    public function careerEdit()
+    {
+        $page = DynamicPage::firstOrNew(['page_key' => 'career']);
+
+        // If content is empty or not in the expected format, initialize it
+        if (empty($page->content) || !isset($page->content)) {
+            $page->content = [
+                'en' => [
+                    // Hero Section
+                    'hero_title' => 'Find A Job That Aligns With Your Interests And Skills',
+                    'hero_subtitle' => 'Work alongside amazing people, and be a part of innovation that makes a real difference in businesses worldwide.',
+                    'hero_image' => '',
+                ],
+                'ar' => [
+                    // Hero Section
+                    'hero_title' => 'ابحث عن وظيفة تتماشى مع اهتماماتك ومهاراتك',
+                    'hero_subtitle' => 'اعمل جنبًا إلى جنب مع أشخاص رائعين، وكن جزءًا من الابتكار الذي يُحدث فرقًا حقيقيًا في الشركات حول العالم.',
+                    'hero_image' => '',
+                ]
+            ];
+            $page->save();
+        }
+
+        return view('admin.pages.dynamicPages.career', compact('page'));
+    }
+
+    public function careerUpdate(UpdateCareerPageRequest $request)
+    {
+        $page = DynamicPage::firstOrNew(['page_key' => 'career']);
+        $validatedData = $request->validated();
+
+        // Get existing content or create new structure with proper nested arrays
+        $content = $page->getTranslations('content') ?? [];
+
+        // Ensure the content has the proper structure
+        if (!isset($content['en']) || !is_array($content['en'])) {
+            $content['en'] = [];
+        }
+        if (!isset($content['ar']) || !is_array($content['ar'])) {
+            $content['ar'] = [];
+        }
+
+        // Handle hero image upload
+        $heroImage = $this->handleSingleFileUpload(
+            $request,
+            'hero_image',
+            $content['en'],
+            $content['en'],
+            'career/hero'
+        );
+
+        // If no new hero image uploaded, try to get from existing content
+        if (empty($heroImage)) {
+            $heroImage = $content['en']['hero_image'] ?? $content['ar']['hero_image'] ?? '';
+        }
+
+        // Update English content
+        $content['en'] = [
+            // Hero Section
+            'hero_title' => $validatedData['hero_title']['en'],
+            'hero_subtitle' => $validatedData['hero_subtitle']['en'],
+            'hero_image' => $heroImage,
+        ];
+
+        // Update Arabic content
+        $content['ar'] = [
+            // Hero Section
+            'hero_title' => $validatedData['hero_title']['ar'],
+            'hero_subtitle' => $validatedData['hero_subtitle']['ar'],
+            'hero_image' => $heroImage, // Same image for both languages
+        ];
+
+        // Make sure we ONLY have the en and ar keys
+        $page->content = [
+            'en' => $content['en'],
+            'ar' => $content['ar']
+        ];
+
+        $page->save();
+
+        return redirect()->route('admin.dynamicPages.career')
+            ->with('success', 'Career page content updated successfully!');
     }
 }
