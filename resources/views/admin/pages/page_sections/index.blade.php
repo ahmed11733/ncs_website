@@ -61,7 +61,7 @@
                                     <td>{{ $section->page->name }}</td>
                                     <td>{{ $section->title }}</td>
                                     <td>{{ $section->order }}</td>
-                                    <td>{{ $section->created_at->format('M d, Y H:i') }}</td>
+                                    <td>{{ $section->created_at?->format('M d, Y H:i') ?? '-' }}</td>
                                     <td>
                                         <div class="d-flex gap-3">
                                             <a href="{{ route('admin.page-sections.edit', $section) }}"
