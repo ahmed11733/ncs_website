@@ -14,20 +14,24 @@ class JobResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $locale = $request->header('Accept-Language');
+
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'department' => $this->department->name,
+            'title' => $this->getTranslation('title', $locale),
+            'department' => [
+                'id' => $this->department?->id,
+                'name' => $this->department?->getTranslation('name',$locale),
+            ],
             'experience_years' => $this->experience_years,
-            'last_date' => $this->last_date->format('Y-m-d'),
-            'job_description' => $this->job_description,
-            'skills' => $this->skills,
-            'nationality' => $this->nationality,
-            'certificate' => $this->certificate,
+            'last_date' => optional($this->last_date)->format('Y-m-d'),
+            'job_description' => $this->getTranslation('job_description', $locale),
+            'skills' => $this->getTranslation('skills', $locale),
+            'nationality' => $this->getTranslation('nationality', $locale),
+            'certificate' => $this->getTranslation('certificate', $locale),
             'age' => $this->age,
-            'specialization' => $this->specialization,
-            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
-            'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+            'specialization' => $this->getTranslation('specialization', $locale),
+            'created_at' => $this->created_at->format('Y-m-d H:i:s')
         ];
     }
 }

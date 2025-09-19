@@ -14,159 +14,159 @@ class DepartmentAndJobSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 3 departments
         $departments = [
-            ['name' => 'Engineering'],
-            ['name' => 'Marketing'],
-            ['name' => 'Human Resources']
+            [
+                'name' => [
+                    'en' => 'Engineering',
+                    'ar' => 'الهندسة'
+                ],
+                'jobs' => [
+                    [
+                        'title' => [
+                            'en' => 'Senior Software Engineer',
+                            'ar' => 'مهندس برمجيات أول'
+                        ],
+                        'experience_years' => 5,
+                        'last_date' => Carbon::now()->addDays(30),
+                        'job_description' => [
+                            'en' => 'Develop and maintain software applications using modern technologies.',
+                            'ar' => 'تطوير وصيانة تطبيقات البرمجيات باستخدام تقنيات حديثة.'
+                        ],
+                        'skills' => [
+                            'en' => 'PHP, Laravel, JavaScript, MySQL',
+                            'ar' => 'PHP، لارافيل، جافاسكريبت، MySQL'
+                        ],
+                        'nationality' => [
+                            'en' => 'Any',
+                            'ar' => 'أي جنسية'
+                        ],
+                        'certificate' => [
+                            'en' => 'Computer Science degree',
+                            'ar' => 'درجة في علوم الحاسب'
+                        ],
+                        'age' => null,
+                        'specialization' => [
+                            'en' => 'Backend Development',
+                            'ar' => 'تطوير الواجهة الخلفية'
+                        ]
+                    ],
+                    [
+                        'title' => [
+                            'en' => 'Frontend Developer',
+                            'ar' => 'مطوّر واجهات أمامية'
+                        ],
+                        'experience_years' => 3,
+                        'last_date' => Carbon::now()->addDays(45),
+                        'job_description' => [
+                            'en' => 'Build responsive user interfaces using modern frontend frameworks.',
+                            'ar' => 'بناء واجهات مستخدم متجاوبة باستخدام أُطر حديثة.'
+                        ],
+                        'skills' => [
+                            'en' => 'JavaScript, React, Vue, CSS',
+                            'ar' => 'جافاسكريبت، رياكت، فيو، CSS'
+                        ],
+                        'nationality' => [
+                            'en' => 'Any',
+                            'ar' => 'أي جنسية'
+                        ],
+                        'certificate' => [
+                            'en' => 'Computer Science or related field',
+                            'ar' => 'علوم حاسب أو مجال ذو صلة'
+                        ],
+                        'age' => null,
+                        'specialization' => [
+                            'en' => 'Frontend Development',
+                            'ar' => 'تطوير الواجهة الأمامية'
+                        ]
+                    ]
+                ]
+            ],
+            [
+                'name' => [
+                    'en' => 'Marketing',
+                    'ar' => 'التسويق'
+                ],
+                'jobs' => [
+                    [
+                        'title' => [
+                            'en' => 'Digital Marketing Specialist',
+                            'ar' => 'أخصائي تسويق رقمي'
+                        ],
+                        'experience_years' => 3,
+                        'last_date' => Carbon::now()->addDays(30),
+                        'job_description' => [
+                            'en' => 'Develop and implement digital marketing campaigns.',
+                            'ar' => 'تطوير وتنفيذ حملات تسويق رقمي.'
+                        ],
+                        'skills' => [
+                            'en' => 'SEO, SEM, Social Media, Content Marketing',
+                            'ar' => 'تحسين محركات البحث، التسويق عبر الشبكات الاجتماعية'
+                        ],
+                        'nationality' => [
+                            'en' => 'Any',
+                            'ar' => 'أي جنسية'
+                        ],
+                        'certificate' => [
+                            'en' => 'Marketing or related field',
+                            'ar' => 'تسويق أو مجال ذو صلة'
+                        ],
+                        'age' => null,
+                        'specialization' => [
+                            'en' => 'Digital Marketing',
+                            'ar' => 'التسويق الرقمي'
+                        ]
+                    ]
+                ]
+            ],
+            [
+                'name' => [
+                    'en' => 'Human Resources',
+                    'ar' => 'الموارد البشرية'
+                ],
+                'jobs' => [
+                    [
+                        'title' => [
+                            'en' => 'HR Business Partner',
+                            'ar' => 'شريك أعمال الموارد البشرية'
+                        ],
+                        'experience_years' => 5,
+                        'last_date' => Carbon::now()->addDays(30),
+                        'job_description' => [
+                            'en' => 'Partner with business units on HR strategies and initiatives.',
+                            'ar' => 'التعاون مع وحدات الأعمال في استراتيجيات الموارد البشرية.'
+                        ],
+                        'skills' => [
+                            'en' => 'Employee Relations, Talent Management',
+                            'ar' => 'العلاقات الوظيفية، إدارة المواهب'
+                        ],
+                        'nationality' => [
+                            'en' => 'Any',
+                            'ar' => 'أي جنسية'
+                        ],
+                        'certificate' => [
+                            'en' => 'Human Resources or related field',
+                            'ar' => 'موارد بشرية أو مجال ذو صلة'
+                        ],
+                        'age' => null,
+                        'specialization' => [
+                            'en' => 'HR Management',
+                            'ar' => 'إدارة الموارد البشرية'
+                        ]
+                    ]
+                ]
+            ]
         ];
 
-        foreach ($departments as $department) {
-            $dept = JobDepartment::create($department);
+        foreach ($departments as $depData) {
+            $jobs = $depData['jobs'];
+            unset($depData['jobs']);
 
-            // Create 3 jobs for each department
-            switch ($dept->name) {
-                case 'Engineering':
-                    $this->createEngineeringJobs($dept);
-                    break;
-                case 'Marketing':
-                    $this->createMarketingJobs($dept);
-                    break;
-                case 'Human Resources':
-                    $this->createHRJobs($dept);
-                    break;
+            $department = JobDepartment::create($depData);
+
+            foreach ($jobs as $job) {
+                $job['department_id'] = $department->id;
+                Job::create($job);
             }
-        }
-    }
-
-    private function createEngineeringJobs(JobDepartment $department): void
-    {
-        $jobs = [
-            [
-                'title' => 'Senior Software Engineer',
-                'experience_years' => 5,
-                'last_date' => Carbon::now()->addDays(30),
-                'job_description' => 'Develop and maintain software applications using modern technologies.',
-                'skills' => 'PHP, Laravel, JavaScript, MySQL',
-                'nationality' => 'Any',
-                'certificate' => 'Computer Science degree',
-                'age' => null,
-                'specialization' => 'Backend Development'
-            ],
-            [
-                'title' => 'Frontend Developer',
-                'experience_years' => 3,
-                'last_date' => Carbon::now()->addDays(45),
-                'job_description' => 'Build responsive user interfaces using modern frontend frameworks.',
-                'skills' => 'JavaScript, React, Vue, CSS',
-                'nationality' => 'Any',
-                'certificate' => 'Computer Science or related field',
-                'age' => null,
-                'specialization' => 'Frontend Development'
-            ],
-            [
-                'title' => 'DevOps Engineer',
-                'experience_years' => 4,
-                'last_date' => Carbon::now()->addDays(60),
-                'job_description' => 'Implement and maintain CI/CD pipelines and cloud infrastructure.',
-                'skills' => 'AWS, Docker, Kubernetes, Terraform',
-                'nationality' => 'Any',
-                'certificate' => 'Computer Science or related field',
-                'age' => null,
-                'specialization' => 'Cloud Infrastructure'
-            ]
-        ];
-
-        $this->createJobsForDepartment($department, $jobs);
-    }
-
-    private function createMarketingJobs(JobDepartment $department): void
-    {
-        $jobs = [
-            [
-                'title' => 'Digital Marketing Specialist',
-                'experience_years' => 3,
-                'last_date' => Carbon::now()->addDays(30),
-                'job_description' => 'Develop and implement digital marketing campaigns.',
-                'skills' => 'SEO, SEM, Social Media, Content Marketing',
-                'nationality' => 'Any',
-                'certificate' => 'Marketing or related field',
-                'age' => null,
-                'specialization' => 'Digital Marketing'
-            ],
-            [
-                'title' => 'Content Marketing Manager',
-                'experience_years' => 5,
-                'last_date' => Carbon::now()->addDays(45),
-                'job_description' => 'Develop content strategy and oversee content creation.',
-                'skills' => 'Content Strategy, Copywriting, SEO',
-                'nationality' => 'Any',
-                'certificate' => 'Marketing, Communications or related field',
-                'age' => null,
-                'specialization' => 'Content Marketing'
-            ],
-            [
-                'title' => 'Social Media Coordinator',
-                'experience_years' => 2,
-                'last_date' => Carbon::now()->addDays(60),
-                'job_description' => 'Manage social media accounts and engage with audiences.',
-                'skills' => 'Social Media Management, Content Creation',
-                'nationality' => 'Any',
-                'certificate' => 'Marketing or related field',
-                'age' => null,
-                'specialization' => 'Social Media'
-            ]
-        ];
-
-        $this->createJobsForDepartment($department, $jobs);
-    }
-
-    private function createHRJobs(JobDepartment $department): void
-    {
-        $jobs = [
-            [
-                'title' => 'HR Business Partner',
-                'experience_years' => 5,
-                'last_date' => Carbon::now()->addDays(30),
-                'job_description' => 'Partner with business units on HR strategies and initiatives.',
-                'skills' => 'Employee Relations, Talent Management',
-                'nationality' => 'Any',
-                'certificate' => 'Human Resources or related field',
-                'age' => null,
-                'specialization' => 'HR Management'
-            ],
-            [
-                'title' => 'Recruitment Specialist',
-                'experience_years' => 3,
-                'last_date' => Carbon::now()->addDays(45),
-                'job_description' => 'Source, screen, and recruit top talent for the organization.',
-                'skills' => 'Interviewing, Talent Sourcing',
-                'nationality' => 'Any',
-                'certificate' => 'Human Resources or related field',
-                'age' => null,
-                'specialization' => 'Recruitment'
-            ],
-            [
-                'title' => 'Training and Development Coordinator',
-                'experience_years' => 4,
-                'last_date' => Carbon::now()->addDays(60),
-                'job_description' => 'Develop and implement employee training programs.',
-                'skills' => 'Training Development, Facilitation',
-                'nationality' => 'Any',
-                'certificate' => 'Human Resources or related field',
-                'age' => null,
-                'specialization' => 'Learning & Development'
-            ]
-        ];
-
-        $this->createJobsForDepartment($department, $jobs);
-    }
-
-    private function createJobsForDepartment(JobDepartment $department, array $jobs): void
-    {
-        foreach ($jobs as $job) {
-            $job['department_id'] = $department->id;
-            Job::create($job);
         }
     }
 }

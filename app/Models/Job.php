@@ -4,10 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
 class Job extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
+
+    public array $translatable = [
+        'title',
+        'job_description',
+        'skills',
+        'nationality',
+        'certificate',
+        'specialization',
+    ];
 
     protected $fillable = [
         'department_id',
@@ -26,14 +38,12 @@ class Job extends Model
         'last_date' => 'date',
     ];
 
-
-    public function department()
+    public function department(): BelongsTo
     {
         return $this->belongsTo(JobDepartment::class, 'department_id');
     }
 
-    // In app/Models/Job.php
-    public function applications()
+    public function applications(): HasMany
     {
         return $this->hasMany(JobApplication::class, 'job_id');
     }

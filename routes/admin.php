@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DynamicPageController;
 use App\Http\Controllers\Admin\EventsController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\JobApplicationController;
+use App\Http\Controllers\Admin\JobDepartmentsController;
 use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\PageCategoryController;
 use App\Http\Controllers\Admin\PageController;
@@ -25,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group(['as' => 'admin.', 'prefix' => '/admin'], function () {
+Route::group(['as' => 'admin.', 'prefix' => '/'], function () {
     Route::get('/', [AuthController::class, 'loginForm'])->name('login');
     Route::get('login', [AuthController::class, 'loginForm'])->name('login');
     Route::post('login', [AuthController::class, 'login'])->name('submit.login');
@@ -53,7 +54,14 @@ Route::group(['as' => 'admin.', 'prefix' => '/admin'], function () {
 
         });
 
-
+        Route::prefix('job-departments')->name('job-departments.')->group(function () {
+            Route::get('/', [JobDepartmentsController::class, 'index'])->name('index');
+            Route::get('/create', [JobDepartmentsController::class, 'create'])->name('create');
+            Route::post('/store', [JobDepartmentsController::class, 'store'])->name('store');
+            Route::get('/edit/{jobDepartment}', [JobDepartmentsController::class, 'edit'])->name('edit');
+            Route::put('/update/{jobDepartment}', [JobDepartmentsController::class, 'update'])->name('update');
+            Route::delete('/destroy/{id}', [JobDepartmentsController::class, 'destroy'])->name('destroy');
+        });
 
         Route::resource('page-categories', PageCategoryController::class)
             ->except(['show']);

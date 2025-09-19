@@ -8,13 +8,11 @@ use App\Models\Job;
 use App\Models\JobDepartment;
 use Exception;
 
-
 class JobsController extends Controller
 {
     public function index()
     {
-        $jobs = Job::query()->orderBy('created_at', 'desc')->paginate(10);
-
+        $jobs = Job::latest()->paginate(10);
         return view('admin.pages.jobs.index', compact('jobs'));
     }
 
@@ -27,16 +25,42 @@ class JobsController extends Controller
     public function store(JobRequest $request)
     {
         try {
-            Job::query()->create($request->validated());
+            Job::create([
+                'department_id' => $request->department_id,
+                'experience_years' => $request->experience_years,
+                'last_date' => $request->last_date,
+                'age' => $request->age,
+                // translatable fields
+                'title' => [
+                    'en' => $request->title_en,
+                    'ar' => $request->title_ar,
+                ],
+                'job_description' => [
+                    'en' => $request->job_description_en,
+                    'ar' => $request->job_description_ar,
+                ],
+                'skills' => [
+                    'en' => $request->skills_en,
+                    'ar' => $request->skills_ar,
+                ],
+                'nationality' => [
+                    'en' => $request->nationality_en,
+                    'ar' => $request->nationality_ar,
+                ],
+                'certificate' => [
+                    'en' => $request->certificate_en,
+                    'ar' => $request->certificate_ar,
+                ],
+                'specialization' => [
+                    'en' => $request->specialization_en,
+                    'ar' => $request->specialization_ar,
+                ],
+            ]);
 
-            return redirect()
-                ->route('admin.jobs.index')
+            return redirect()->route('admin.jobs.index')
                 ->with('success', 'Job created successfully');
-
         } catch (Exception $e) {
-            return redirect()
-                ->back()
-                ->with('error', 'Something went wrong');
+            return redirect()->back()->with('error', 'Something went wrong');
         }
     }
 
@@ -49,22 +73,47 @@ class JobsController extends Controller
     public function update(JobRequest $request, Job $job)
     {
         try {
-            $job->update($request->validated());
+            $job->update([
+                'department_id' => $request->department_id,
+                'experience_years' => $request->experience_years,
+                'last_date' => $request->last_date,
+                'age' => $request->age,
+                'title' => [
+                    'en' => $request->title_en,
+                    'ar' => $request->title_ar,
+                ],
+                'job_description' => [
+                    'en' => $request->job_description_en,
+                    'ar' => $request->job_description_ar,
+                ],
+                'skills' => [
+                    'en' => $request->skills_en,
+                    'ar' => $request->skills_ar,
+                ],
+                'nationality' => [
+                    'en' => $request->nationality_en,
+                    'ar' => $request->nationality_ar,
+                ],
+                'certificate' => [
+                    'en' => $request->certificate_en,
+                    'ar' => $request->certificate_ar,
+                ],
+                'specialization' => [
+                    'en' => $request->specialization_en,
+                    'ar' => $request->specialization_ar,
+                ],
+            ]);
 
-            return redirect()
-                ->route('admin.jobs.index')
+            return redirect()->route('admin.jobs.index')
                 ->with('success', 'Job updated successfully');
-
         } catch (Exception $e) {
-            return redirect()
-                ->back()
-                ->with('error', 'Something went wrong');
+            return redirect()->back()->with('error', 'Something went wrong');
         }
     }
 
     public function destroy($id)
     {
-        $job = Job::query()->findOrFail($id);
+        $job = Job::findOrFail($id);
         $job->delete();
 
         return redirect()->back()->with('success', 'Job deleted successfully.');

@@ -17,7 +17,7 @@ class JobsController extends Controller
         $jobs = Job::query()
             ->when($request->filled('department'), function ($query) use ($request){
                 $query->whereHas('department' , function ($query) use ($request){
-                    $query->where('name', '=', $request->get('department'));
+                    $query->where('id', '=', $request->get('department'));
                 });
             })
             ->orderBy('created_at', 'desc')

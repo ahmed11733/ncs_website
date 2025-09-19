@@ -36,6 +36,12 @@
                         <span key="t-chat">Event Registrations</span>
                     </a>
                 </li>
+                <li @if(Route::is('admin.job-departments.index*')) class="mm-active" @endif>
+                    <a href="{{ route('admin.job-departments.index') }}" class="waves-effect">
+                        <i class="bx bx-briefcase"></i>
+                        <span key="t-chat">Job Departments</span>
+                    </a>
+                </li>
                 <li @if(Route::is('admin.jobs.index*') ) class="mm-active" @endif>
                     <a href="{{route('admin.jobs.index')}}" class="waves-effect">
                         <i class="bx bx-briefcase"></i>
