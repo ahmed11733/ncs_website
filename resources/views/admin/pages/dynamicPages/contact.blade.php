@@ -73,8 +73,8 @@
                                             <!-- English Hero Subtitle -->
                                             <div class="mb-3 en-field">
                                                 <label class="form-label">Subtitle (English) <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control @error('hero_subtitle.en') is-invalid @enderror" name="hero_subtitle[en]"
-                                                       value="{{ old('hero_subtitle.en', $page->getTranslation('content', 'en')['hero_subtitle'] ?? 'We\'re Happy To Assist — Feel Free To Contact Us With Any Questions Or Service Inquiries.') }}">
+                                                <textarea class="form-control @error('hero_subtitle.en') is-invalid @enderror"
+                                                          name="hero_subtitle[en]" rows="5">{{ old('hero_subtitle.en', $page->getTranslation('content', 'en')['hero_subtitle'] ?? 'We\'re Happy To Assist — Feel Free To Contact Us With Any Questions Or Service Inquiries.') }}</textarea>
                                                 @error('hero_subtitle.en')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -83,8 +83,8 @@
                                             <!-- Arabic Hero Subtitle -->
                                             <div class="mb-3 ar-field" style="display: none;">
                                                 <label class="form-label">العنوان الفرعي (العربية) <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control @error('hero_subtitle.ar') is-invalid @enderror" name="hero_subtitle[ar]"
-                                                       value="{{ old('hero_subtitle.ar', $page->getTranslation('content', 'ar')['hero_subtitle'] ?? 'نحن سعداء لمساعدتك - لا تتردد في الاتصال بنا مع أي أسئلة أو استفسارات الخدمة.') }}" dir="rtl">
+                                                <textarea class="form-control @error('hero_subtitle.ar') is-invalid @enderror"
+                                                          name="hero_subtitle[ar]" rows="5" dir="rtl">{{ old('hero_subtitle.ar', $page->getTranslation('content', 'ar')['hero_subtitle'] ?? 'نحن سعداء لمساعدتك - لا تتردد في الاتصال بنا مع أي أسئلة أو استفسارات الخدمة.') }}</textarea>
                                                 @error('hero_subtitle.ar')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror

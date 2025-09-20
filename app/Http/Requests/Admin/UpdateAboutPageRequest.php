@@ -16,8 +16,8 @@ class UpdateAboutPageRequest extends FormRequest
         $rules = [
             'hero_title.en' => 'required|string|max:255',
             'hero_title.ar' => 'required|string|max:255',
-            'hero_subtitle.en' => 'required|string|max:500',
-            'hero_subtitle.ar' => 'required|string|max:500',
+            'hero_subtitle.en' => 'required|string',
+            'hero_subtitle.ar' => 'required|string',
             'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
 
             'about_title.en' => 'required|string|max:255',

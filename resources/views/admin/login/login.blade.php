@@ -77,7 +77,7 @@
                             <div class="auth-footer text-center mt-4 mt-md-5">
                                 <p class="mb-0 text-muted">
                                     &copy; <script>document.write(new Date().getFullYear())</script> All rights reserved
-                                    <a href="#" class="text-primary">NCS</a>
+                                    <a href="#" class="text-primary">NDT</a>
                                 </p>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                     <div class="auth-bg-section">
                         <div class="bg-overlay" id="particles-js" style="background-color: #1a2229;"></div>
                         <div class="auth-bg-content">
-                            <p class="text-white-70 mb-0" style="font-size: 60px;">NCS</p>
+                            <p class="text-white-70 mb-0" style="font-size: 60px;">NDT</p>
                             <p class="text-white-70 mb-0" style="font-size: 25px;">WEBSITE - DASHBOARD</p>
 {{--                            <img src="{{asset('admin_assets/images/logo.png')}}" alt="Logo" class="login-logo"--}}
                         </div>

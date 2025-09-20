@@ -48,7 +48,12 @@
                             @foreach($categories as $category)
                                 <tr>
                                     <td>{{ $category->id }}</td>
-                                    <td>{{ $category->name . (count($category->pages) ? ' (' .count($category->pages).')' : '') }}</td>
+                                    <td>
+                                        {{ $category->getTranslation('name', app()->getLocale()) }}
+                                        @if(count($category->pages))
+                                            ({{ count($category->pages) }})
+                                        @endif
+                                    </td>
                                     <td>{{ $category->created_at->format('M d, Y H:i') }}</td>
                                     <td>
                                         <div class="d-flex gap-3">

@@ -4,11 +4,11 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>NCS - Dashboard</title>
+    <title>NDT - Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="NCS - Dashboard"
-          name="NCS - Dashboard"/>
-    <meta content="NCS - Dashboard" name="NCS"/>
+    <meta content="NDT - Dashboard"
+          name="NDT - Dashboard"/>
+    <meta content="NDT - Dashboard" name="NDT"/>
     <link rel="shortcut icon" href="{{asset('admin_assets/images/logo.png')}}">
     <!-- spider effect -->
     <link rel="stylesheet" href="{{asset('admin_assets/css/style-slider.css')}}">

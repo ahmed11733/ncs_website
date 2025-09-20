@@ -4,11 +4,11 @@
 <head>
 
     <meta charset="utf-8"/>
-    <title>NCS Dashboard</title>
+    <title>NDT Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="NCS Dashboard"
-          name="NCS Dashboard"/>
-    <meta content="NCS Dashboard" name="NCS"/>
+    <meta content="NDT Dashboard"
+          name="NDT Dashboard"/>
+    <meta content="NDT Dashboard" name="NDT"/>
     <link rel="shortcut icon" href="{{asset('admin_assets/images/logo.png')}}">
     <link rel="icon" href="{{asset('admin_assets/images/logo.png')}}">
 
@@ -49,7 +49,7 @@
                     <div class="col-sm-6">
                         <script>document.write(new Date().getFullYear())</script>
                         Copy Rights <a
-                            href="" target="_blank">NCS</a>.
+                            href="" target="_blank">NDT</a>.
                     </div>
                     <div class="col-sm-6">
                         <div class="text-sm-end d-none d-sm-block">

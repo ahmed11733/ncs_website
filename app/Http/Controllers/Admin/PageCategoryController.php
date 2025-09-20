@@ -20,19 +20,23 @@ class PageCategoryController extends Controller
         return view('admin.pages.page_categories.form');
     }
 
-
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:page_categories',
+            'name.en' => 'required|string|max:255',
+            'name.ar' => 'required|string|max:255',
         ]);
 
-        PageCategory::query()->create($validated);
+        PageCategory::create([
+            'name' => [
+                'en' => $validated['name']['en'],
+                'ar' => $validated['name']['ar'],
+            ]
+        ]);
 
         return redirect()->route('admin.page-categories.index')
             ->with('success', 'Category created successfully');
     }
-
 
     public function edit(PageCategory $pageCategory)
     {
@@ -42,10 +46,16 @@ class PageCategoryController extends Controller
     public function update(Request $request, PageCategory $pageCategory)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:page_categories,name,'.$pageCategory->id,
+            'name.en' => 'required|string|max:255',
+            'name.ar' => 'required|string|max:255',
         ]);
 
-        $pageCategory->update($validated);
+        $pageCategory->update([
+            'name' => [
+                'en' => $validated['name']['en'],
+                'ar' => $validated['name']['ar'],
+            ]
+        ]);
 
         return redirect()->route('admin.page-categories.index')
             ->with('success', 'Category updated successfully');

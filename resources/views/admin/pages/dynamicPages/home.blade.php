@@ -69,8 +69,9 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Subtitle <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control @error('hero_subtitle.en') is-invalid @enderror" name="hero_subtitle[en]"
-                                                               value="{{ old('hero_subtitle.en', $page->getTranslation('content', 'en')['hero_subtitle'] ?? 'Hero Subtitle') }}">
+                                                        <textarea class="form-control @error('hero_subtitle.en') is-invalid @enderror"
+                                                                  name="hero_subtitle[en]"
+                                                                  rows="5">{{ old('hero_subtitle.en', $page->getTranslation('content', 'en')['hero_subtitle'] ?? 'Hero Subtitle') }}</textarea>
                                                         @error('hero_subtitle.en')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
@@ -93,8 +94,9 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Subtitle (Arabic) <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control @error('hero_subtitle.ar') is-invalid @enderror" name="hero_subtitle[ar]"
-                                                               value="{{ old('hero_subtitle.ar', $page->getTranslation('content', 'ar')['hero_subtitle'] ?? 'العنوان الفرعي') }}">
+                                                        <textarea class="form-control @error('hero_subtitle.ar') is-invalid @enderror"
+                                                                  name="hero_subtitle[ar]"
+                                                                  rows="5">{{ old('hero_subtitle.ar', $page->getTranslation('content', 'ar')['hero_subtitle'] ?? 'العنوان الفرعي') }}</textarea>
                                                         @error('hero_subtitle.ar')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
