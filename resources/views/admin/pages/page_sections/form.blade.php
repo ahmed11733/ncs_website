@@ -1,128 +1,158 @@
 @extends('admin.layouts.app')
 
-@section('title', isset($pageSection) ? 'Edit Section' : 'Create Section')
-
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">{{ isset($pageSection) ? 'Edit' : 'Create' }} Page Section</h4>
-                <div class="page-title-right">
-                    <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('admin.page-sections.index')}}">Page Sections</a></li>
-                        <li class="breadcrumb-item active">{{ isset($pageSection) ? 'Edit' : 'Create' }}</li>
-                    </ol>
-                </div>
+    <div class="container">
+        <h1>{{ isset($pageSection) ? 'Edit Section' : 'Create Section' }}</h1>
+
+        {{-- Make sure $pageSection exists (null on create) --}}
+        @php
+            $pageSection = $pageSection ?? null;
+        @endphp
+
+        <form action="{{ isset($pageSection) ? route('admin.page-sections.update', $pageSection) : route('admin.page-sections.store') }}"
+              method="POST" enctype="multipart/form-data">
+            @csrf
+            @if(isset($pageSection))
+                @method('PUT')
+            @endif
+
+            <!-- Page Selection -->
+            <div class="mb-3">
+                <label class="form-label">Page <span class="text-danger">*</span></label>
+                <select name="page_id" class="form-control @error('page_id') is-invalid @enderror" required>
+                    <option value="">-- Select Page --</option>
+                    @foreach($pages as $page)
+                        <option value="{{ $page->id }}"
+                            {{ (string) old('page_id', optional($pageSection)->page_id) === (string) $page->id ? 'selected' : '' }}>
+                            {{ $page->getTranslation('name','en') }} / {{ $page->getTranslation('name','ar') }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('page_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ isset($pageSection) ? route('admin.page-sections.update', $pageSection->id) : route('admin.page-sections.store') }}"
-                          method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @if(isset($pageSection))
-                            @method('PUT')
-                        @endif
+            <!-- English Fields -->
+            <h5 class="mt-4">English</h5>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="page_id" class="form-label">Page</label>
-                                    <select name="page_id" id="page_id" class="form-select" required>
-                                        <option value="">Select Page</option>
-                                        @foreach($pages as $page)
-                                            <option value="{{ $page->id }}"
-                                                {{ (isset($pageSection) && $pageSection->page_id == $page->id) || old('page_id') == $page->id ? 'selected' : '' }}>
-                                                {{ $page->name .' - '. $page->category->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="order" class="form-label">Order</label>
-                                    <input type="number" name="order" id="order" class="form-control"
-                                           value="{{ isset($pageSection) ? $pageSection->order : old('order') }}" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label for="title" class="form-label">Title</label>
-                                    <input type="text" name="title" id="title" class="form-control"
-                                           value="{{ isset($pageSection) ? $pageSection->title : old('title') }}" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label for="sub_title" class="form-label">Sub Title</label>
-                                    <input type="text" name="sub_title" id="sub_title" class="form-control"
-                                           value="{{ isset($pageSection) ? $pageSection->sub_title : old('sub_title') }}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label for="label" class="form-label">Label</label>
-                                    <input type="text" name="label" id="label" class="form-control"
-                                           value="{{ isset($pageSection) ? $pageSection->label : old('label') }}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label for="image" class="form-label">Image</label>
-                                    <input type="file" name="image" id="image" class="form-control">
-                                    @if(isset($pageSection) && $pageSection->image)
-                                        <div class="mt-2">
-                                            <img src="{{ asset('storage/' . $pageSection->image) }}"
-                                                 alt="Current section image" style="max-height: 150px;">
-                                            <div class="mt-1 text-muted small">
-                                                Current image: {{ basename($pageSection->image) }}
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label for="content" class="form-label">Content</label>
-                                    <textarea name="content" id="content" class="form-control" rows="5" required>{{ isset($pageSection) ? $pageSection->content : old('content') }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="d-flex justify-content-end gap-2">
-                                    <a href="{{ route('admin.page-sections.index') }}" class="btn btn-secondary">Cancel</a>
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ isset($pageSection) ? 'Update' : 'Create' }} Section
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <div class="mb-3">
+                <label class="form-label">Label (EN)</label>
+                <input type="text"
+                       class="form-control @error('label.en') is-invalid @enderror"
+                       name="label[en]"
+                       value="{{ old('label.en', optional($pageSection)->getTranslation('label','en')) }}">
+                @error('label.en') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
-        </div>
+
+            <div class="mb-3">
+                <label class="form-label">Title (EN) <span class="text-danger">*</span></label>
+                <input type="text"
+                       class="form-control @error('title.en') is-invalid @enderror"
+                       name="title[en]"
+                       value="{{ old('title.en', optional($pageSection)->getTranslation('title','en')) }}"
+                       required>
+                @error('title.en') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Subtitle (EN)</label>
+                <input type="text"
+                       class="form-control @error('sub_title.en') is-invalid @enderror"
+                       name="sub_title[en]"
+                       value="{{ old('sub_title.en', optional($pageSection)->getTranslation('sub_title','en')) }}">
+                @error('sub_title.en') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Content (EN)</label>
+                <textarea rows="5"
+                          id="content_en"
+                          class="form-control @error('content.en') is-invalid @enderror"
+                          name="content[en]">{{ old('content.en', optional($pageSection)->getTranslation('content','en')) }}</textarea>
+                @error('content.en') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <!-- Arabic Fields -->
+            <h5 class="mt-4">Arabic</h5>
+
+            <div class="mb-3">
+                <label class="form-label">Label (AR)</label>
+                <input type="text"
+                       class="form-control @error('label.ar') is-invalid @enderror"
+                       name="label[ar]"
+                       value="{{ old('label.ar', optional($pageSection)->getTranslation('label','ar')) }}">
+                @error('label.ar') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Title (AR) <span class="text-danger">*</span></label>
+                <input type="text"
+                       class="form-control @error('title.ar') is-invalid @enderror"
+                       name="title[ar]"
+                       value="{{ old('title.ar', optional($pageSection)->getTranslation('title','ar')) }}"
+                       required>
+                @error('title.ar') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Subtitle (AR)</label>
+                <input type="text"
+                       class="form-control @error('sub_title.ar') is-invalid @enderror"
+                       name="sub_title[ar]"
+                       value="{{ old('sub_title.ar', optional($pageSection)->getTranslation('sub_title','ar')) }}">
+                @error('sub_title.ar') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Content (AR)</label>
+                <textarea rows="5"
+                          id="content_ar"
+                          class="form-control @error('content.ar') is-invalid @enderror"
+                          name="content[ar]">{{ old('content.ar', optional($pageSection)->getTranslation('content','ar')) }}</textarea>
+                @error('content.ar') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <!-- Image -->
+            <div class="mb-3">
+                <label class="form-label">Image</label>
+                <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">
+                @if(isset($pageSection) && $pageSection && $pageSection->image)
+                    <div class="mt-2">
+                        <img src="{{ asset('storage/' . $pageSection->image) }}" alt="Section Image" width="150">
+                    </div>
+                @endif
+                @error('image') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <!-- Order -->
+            <div class="mb-3">
+                <label class="form-label">Order</label>
+                <input type="number"
+                       class="form-control @error('order') is-invalid @enderror"
+                       name="order"
+                       value="{{ old('order', optional($pageSection)->order ?? 1) }}">
+                @error('order') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-success">
+                {{ isset($pageSection) ? 'Update Section' : 'Create Section' }}
+            </button>
+        </form>
     </div>
 @endsection
 
 @section('extra-js')
-    <!-- CKEditor JS -->
-    <script src="{{asset('admin_assets/ckeditor/ckeditor.js')}}"></script>
+    <!-- CKEditor (optional) -->
+    <script src="{{ asset('admin_assets/ckeditor/ckeditor.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            // Initialize CKEditor for content textarea
-            CKEDITOR.replace('content');
-        });
+        // Initialize CKEditor if file exists in public assets
+        if (typeof CKEDITOR !== 'undefined') {
+            try {
+                CKEDITOR.replace('content_en');
+            } catch (e) { console.warn(e); }
+            try {
+                CKEDITOR.replace('content_ar');
+            } catch (e) { console.warn(e); }
+        }
     </script>
 @endsection

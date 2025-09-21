@@ -2,12 +2,6 @@
 
 @section('title', 'Pages')
 
-@section('breadcrumb')
-    <li class="breadcrumb-item text-muted">
-        <a href="javascript:" class="text-muted text-hover-primary">Home</a>
-    </li>
-@endsection
-
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -23,10 +17,12 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    {{-- Filter --}}
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <form method="GET" action="{{ route('admin.pages.index') }}" class="form-inline d-flex align-items-center">
@@ -35,7 +31,7 @@
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}"
                                             {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
+                                            {{ $category->getTranslation('name', app()->getLocale()) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -48,37 +44,41 @@
                             </a>
                         </div>
                     </div>
+
+                    {{-- Table --}}
                     <div class="table-responsive mt-2">
-                        <table class="table table-hover dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <table class="table table-hover dt-responsive nowrap" style="width: 100%;">
                             <thead>
                             <tr class="tr-colored">
-                                <th scope="col">ID</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Name (Sections count)</th>
-                                <th scope="col">Order</th>
-                                <th scope="col">Created At</th>
-                                <th scope="col">More</th>
+                                <th>ID</th>
+                                <th>Category</th>
+                                <th>Name (EN / AR)</th>
+                                <th>Order</th>
+                                <th>Created At</th>
+                                <th>More</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($pages as $page)
                                 <tr>
                                     <td>{{ $page->id }}</td>
-                                    <td>{{ $page->category->name }}</td>
-                                    <td>{{ $page->name . (count($page->sections) ? ' (' .count($page->sections).')' : '') }}</td>
+                                    <td>{{ $page->category?->getTranslation('name', app()->getLocale()) }}</td>
+                                    <td>
+                                        EN: {{ $page->getTranslation('name','en') }} <br>
+                                        AR: {{ $page->getTranslation('name','ar') }}
+                                        {!! count($page->sections) ? '<br><small class="text-muted">Sections: '.count($page->sections).'</small>' : '' !!}
+                                    </td>
                                     <td>{{ $page->order }}</td>
                                     <td>{{ $page->created_at->format('M d, Y H:i') }}</td>
                                     <td>
                                         <div class="d-flex gap-3">
-                                            <a href="{{ route('admin.pages.edit', $page) }}" title="Edit" class="text-primary">
+                                            <a href="{{ route('admin.pages.edit', $page) }}" class="text-primary" title="Edit">
                                                 <i class="mdi mdi-pencil font-size-18"></i>
                                             </a>
-                                            <a onclick="openModalDelete({{$page->id}})" title="Delete" class="text-danger">
+                                            <a onclick="openModalDelete({{$page->id}})" class="text-danger" title="Delete">
                                                 <i class="mdi mdi-delete font-size-18"></i>
                                             </a>
-                                            <a href="{{ route('admin.page-sections.index', ['page_id' => $page->id]) }}"
-                                               title="Page Sections"
-                                               class="text-info">
+                                            <a href="{{ route('admin.page-sections.index', ['page_id' => $page->id]) }}" class="text-info" title="Page Sections">
                                                 <i class="mdi mdi-file-tree font-size-18"></i>
                                             </a>
                                         </div>
@@ -88,25 +88,16 @@
                             </tbody>
                         </table>
                     </div>
+
                     {{$pages->withQueryString()->links('admin.pagination.bootstrap-4')}}
                 </div>
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('extra-js')
-    <!-- Required datatable js -->
-    <script src="{{asset('admin_assets/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('admin_assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-
-    <!-- Responsive examples -->
-    <script src="{{asset('admin_assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
-    <script src="{{asset('admin_assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
-
-    <!-- init js -->
-    <script src="{{asset('admin_assets/js/pages/crypto-orders.init.js')}}"></script>
-
     <script>
         function openModalDelete(page_id) {
             $('.action_form').attr('action', '{{route('admin.pages.destroy', '')}}' + '/' + page_id);
@@ -117,15 +108,9 @@
 
 @section('modal')
     @component('admin.layouts.includes.modal')
-        @slot('modalID')
-            deleteModal
-        @endslot
-        @slot('modalTitle')
-            Delete Page
-        @endslot
-        @slot('modalMethodPutOrDelete')
-            @method('delete')
-        @endslot
+        @slot('modalID') deleteModal @endslot
+        @slot('modalTitle') Delete Page @endslot
+        @slot('modalMethodPutOrDelete') @method('delete') @endslot
         @slot('modalContent')
             <div class="text-center">
                 <span class="text-danger font-16">

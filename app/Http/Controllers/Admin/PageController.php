@@ -34,35 +34,27 @@ class PageController extends Controller
     public function store(PageRequest $request)
     {
         $validated = $request->validated();
+
         if ($request->hasFile('hero_image')) {
             $path = $request->file('hero_image')->store('pages', 'public');
             $validated['hero_image'] = Storage::disk('public')->path($path);
         }
 
-        Page::query()->create($validated);
+        Page::create($validated);
 
         return redirect()->route('admin.pages.index')
             ->with('success', 'Page created successfully');
     }
 
-    public function edit(Page $page)
-    {
-        $categories = PageCategory::all();
-        return view('admin.pages.pages.form', compact('page', 'categories'));
-    }
-
     public function update(PageRequest $request, Page $page)
     {
         $validated = $request->validated();
+
         if ($request->hasFile('hero_image')) {
-            // Delete old image if exists
             if ($page->hero_image) {
-                // Extract relative path from stored full path
                 $relativePath = str_replace(Storage::disk('public')->path(''), '', $page->hero_image);
                 Storage::disk('public')->delete($relativePath);
             }
-
-            // Store new image and save full path
             $path = $request->file('hero_image')->store('pages', 'public');
             $validated['hero_image'] = Storage::disk('public')->path($path);
         }
@@ -71,6 +63,12 @@ class PageController extends Controller
 
         return redirect()->route('admin.pages.index', ['category_id' => $page->page_category_id])
             ->with('success', 'Page updated successfully');
+    }
+
+    public function edit(Page $page)
+    {
+        $categories = PageCategory::all();
+        return view('admin.pages.pages.form', compact('page', 'categories'));
     }
 
     public function destroy(Page $page)

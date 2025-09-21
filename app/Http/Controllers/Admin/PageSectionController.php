@@ -14,9 +14,7 @@ class PageSectionController extends Controller
     public function index(Request $request)
     {
         $sections = PageSection::with('page')
-            ->when($request->page_id, function($query) use ($request) {
-                return $query->where('page_id', $request->page_id);
-            })
+            ->when($request->page_id, fn($q) => $q->where('page_id', $request->page_id))
             ->latest()
             ->paginate(10);
 
@@ -39,7 +37,7 @@ class PageSectionController extends Controller
             $validated['image'] = $request->file('image')->store('page-sections', 'public');
         }
 
-        PageSection::query()->create($validated);
+        PageSection::create($validated);
 
         return redirect()->route('admin.page-sections.index')
             ->with('success', 'Section created successfully');
@@ -76,7 +74,7 @@ class PageSectionController extends Controller
 
         $pageSection->delete();
 
-        return redirect()->route('admin.page-sections.index',['page_id' => $pageSection->page_id])
+        return redirect()->route('admin.page-sections.index', ['page_id' => $pageSection->page_id])
             ->with('success', 'Section deleted successfully');
     }
 }

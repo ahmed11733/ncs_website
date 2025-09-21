@@ -14,22 +14,31 @@ class PageSectionRequest extends FormRequest
 
     public function rules()
     {
-        // For update operations, get the section ID from route parameters
-        $sectionId = $this->route('page_section') ? $this->route('page_section')->id : null;
+        $sectionId = $this->route('page_section')?->id;
 
         return [
             'page_id' => 'required|exists:pages,id',
-            'label' => 'nullable|string|max:255',
-            'title' => 'required|string|max:255',
-            'sub_title' => 'nullable|string|max:255',
-            'content' => 'required|string',
+
+            'label.en' => 'nullable|string|max:255',
+            'label.ar' => 'nullable|string|max:255',
+
+            'title.en' => 'required|string|max:255',
+            'title.ar' => 'required|string|max:255',
+
+            'sub_title.en' => 'nullable|string|max:255',
+            'sub_title.ar' => 'nullable|string|max:255',
+
+            'content.en' => 'required|string',
+            'content.ar' => 'required|string',
+
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+
             'order' => [
                 'required',
                 'integer',
                 Rule::unique('page_sections')
-                    ->where('page_id', $this->page_id)
-                    ->ignore($sectionId)
+                    ->where(fn($q) => $q->where('page_id', $this->page_id))
+                    ->ignore($sectionId),
             ],
         ];
     }
@@ -37,11 +46,11 @@ class PageSectionRequest extends FormRequest
     public function messages()
     {
         return [
-            'page_id.required' => 'The page selection is required',
-            'title.required' => 'The title field is required',
-            'content.required' => 'The content field is required',
+            'title.en.required' => 'The English title is required.',
+            'title.ar.required' => 'The Arabic title is required.',
+            'content.en.required' => 'The English content is required.',
+            'content.ar.required' => 'The Arabic content is required.',
             'order.unique' => 'This order number is already used for another section on this page',
-            'image.max' => 'The image must not be larger than 2MB',
         ];
     }
 }
