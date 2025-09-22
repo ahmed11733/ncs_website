@@ -34,7 +34,8 @@ class PageSectionController extends Controller
         $validated = $request->validated();
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('page-sections', 'public');
+            $path = $request->file('image')->store('page-sections', 'public');
+            $validated['image'] = asset(Storage::url($path));
         }
 
         PageSection::create($validated);
@@ -55,9 +56,13 @@ class PageSectionController extends Controller
 
         if ($request->hasFile('image')) {
             if ($pageSection->image) {
-                Storage::disk('public')->delete($pageSection->image);
+                // strip the /storage prefix to get the relative path
+                $relativePath = str_replace(Storage::url(''), '', $pageSection->image);
+                Storage::disk('public')->delete($relativePath);
             }
-            $validated['image'] = $request->file('image')->store('page-sections', 'public');
+
+            $path = $request->file('image')->store('page-sections', 'public');
+            $validated['image'] = asset(Storage::url($path)); // return URL instead of relative path
         }
 
         $pageSection->update($validated);

@@ -37,7 +37,7 @@ class PageController extends Controller
 
         if ($request->hasFile('hero_image')) {
             $path = $request->file('hero_image')->store('pages', 'public');
-            $validated['hero_image'] = Storage::disk('public')->path($path);
+            $validated['hero_image'] = asset(Storage::url($path));
         }
 
         Page::create($validated);
@@ -55,8 +55,10 @@ class PageController extends Controller
                 $relativePath = str_replace(Storage::disk('public')->path(''), '', $page->hero_image);
                 Storage::disk('public')->delete($relativePath);
             }
+
+            // store new file
             $path = $request->file('hero_image')->store('pages', 'public');
-            $validated['hero_image'] = Storage::disk('public')->path($path);
+            $validated['hero_image'] = asset(Storage::url($path)); // return URL instead of absolute path
         }
 
         $page->update($validated);

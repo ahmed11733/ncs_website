@@ -110,10 +110,7 @@
                                     <input type="file" name="hero_image" id="hero_image" class="form-control">
                                     @if(isset($page) && $page->hero_image)
                                         <div class="mt-2">
-                                            @php
-                                                $relativePath = str_replace(Storage::disk('public')->path(''), '', $page->hero_image);
-                                            @endphp
-                                            <img src="{{ asset('storage/' . $relativePath) }}"
+                                            <img src="{{$page->hero_image}}"
                                                  alt="Current hero image" style="max-height: 150px;">
                                             <div class="mt-1 text-muted small">
                                                 Current image: {{ basename($page->hero_image) }}

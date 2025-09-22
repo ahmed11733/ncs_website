@@ -117,7 +117,7 @@
                 <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">
                 @if(isset($pageSection) && $pageSection && $pageSection->image)
                     <div class="mt-2">
-                        <img src="{{ asset('storage/' . $pageSection->image) }}" alt="Section Image" width="150">
+                        <img src="{{ $pageSection->image }}" alt="Section Image" width="150">
                     </div>
                 @endif
                 @error('image') <div class="invalid-feedback">{{ $message }}</div> @enderror
