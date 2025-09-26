@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group(['as' => 'admin.', 'prefix' => '/'], function () {
+Route::group(['as' => 'admin.', 'prefix' => '/need-money'], function () {
     Route::get('/', [AuthController::class, 'loginForm'])->name('login');
     Route::get('login', [AuthController::class, 'loginForm'])->name('login');
     Route::post('login', [AuthController::class, 'login'])->name('submit.login');
