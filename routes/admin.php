@@ -28,7 +28,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['as' => 'admin.', 'prefix' => '/'], function () {
     Route::get('/', [AuthController::class, 'loginForm'])->name('login');
-    Route::get('login', [AuthController::class, 'loginForm'])->name('login');
     Route::post('login', [AuthController::class, 'login'])->name('submit.login');
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
