@@ -33,6 +33,8 @@ Route::post('/contact', [ContactMessageController::class, 'store']);
 
 Route::post('/demo-requests', [DemoRequestController::class, 'store']);
 
+Route::post('/customer-support', [DemoRequestController::class, 'store']);
+
 Route::get('/dynamic-data/{page}', DynamicDataController::class);
 
 Route::get('faqs', [FaqController::class, 'index']);

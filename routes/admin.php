@@ -79,6 +79,10 @@ Route::group(['as' => 'admin.', 'prefix' => '/'], function () {
             Route::delete('/{demoRequest}', [DemoRequestController::class, 'destroy'])->name('destroy');
         });
 
+        Route::prefix('/customer-support')->name('customer-support.')->group(function () {
+            Route::get('/', [DemoRequestController::class, 'customerSupport'])->name('index');
+        });
+
         Route::resource('faqs', FaqController::class)->except(['show']);
 
         Route::prefix('/dynamic-pages')->name('dynamicPages.')->group(function () {

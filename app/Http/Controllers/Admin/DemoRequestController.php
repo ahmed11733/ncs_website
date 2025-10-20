@@ -11,9 +11,20 @@ class DemoRequestController extends Controller
 {
     public function index()
     {
-        $demoRequests = DemoRequest::query()->orderBy('created_at', 'desc')->paginate(15);
+        $demoRequests = DemoRequest::query()
+            ->whereNull('type')
+            ->orderBy('created_at', 'desc')->paginate(15);
 
         return view('admin.pages.demoRequests.index', compact('demoRequests'));
+    }
+
+  public function customerSupport()
+    {
+        $customerSupportRequests = DemoRequest::query()
+            ->whereNotNull('type')
+            ->orderBy('created_at', 'desc')->paginate(15);
+
+        return view('admin.pages.demoRequests.contactSupport', compact('customerSupportRequests'));
     }
 
 
@@ -21,7 +32,6 @@ class DemoRequestController extends Controller
     {
         $demoRequest->delete();
 
-        return redirect()->route('admin.demo-requests.index')
-            ->with('success', 'Demo request deleted successfully!');
+        return redirect()->back()->with('success', 'Request deleted.');
     }
 }

@@ -84,6 +84,12 @@
                         <span>Demo Requests</span>
                     </a>
                 </li>
+                <li @if(Route::is('admin.customer-support*') ) class="mm-active" @endif>
+                    <a href="{{ route('admin.customer-support.index') }}" class="waves-effect">
+                        <i class="bx bx-calendar-check"></i>
+                        <span>Customer Support</span>
+                    </a>
+                </li>
                 <li @if(Route::is('admin.faqs*')) class="mm-active" @endif>
                     <a href="{{ route('admin.faqs.index') }}" class="waves-effect">
                         <i class="bx bx-help-circle"></i>

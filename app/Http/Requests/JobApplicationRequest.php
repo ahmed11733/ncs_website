@@ -45,8 +45,7 @@ class JobApplicationRequest extends FormRequest
             'additional_comments' => 'required|string|max:2000',
             'reference_contact_information' => 'required|string|max:1000',
             'linkedin_profile' => 'required|url|max:255',
-//            'resume' => 'required|file|mimes:pdf,doc,docx|max:2048',
-//            'cv' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'cv' => 'required|file|mimes:pdf,doc,docx|max:2048',
             'subscribe_to_updates' => 'boolean'
         ];
     }
@@ -75,9 +74,6 @@ class JobApplicationRequest extends FormRequest
             'date_available_to_start.after_or_equal' => 'Start date must be today or in the future',
             'why_join_us.required' => 'Please explain why you want to join us',
             'why_join_us.min' => 'Your answer should be at least 10 characters',
-            'resume.required' => 'Resume is required',
-            'resume.mimes' => 'Resume must be a PDF, DOC or DOCX file',
-            'resume.max' => 'Resume must not exceed 2MB',
             'cv.required' => 'CV is required',
             'cv.mimes' => 'CV must be a PDF, DOC or DOCX file',
             'cv.max' => 'CV must not exceed 2MB'

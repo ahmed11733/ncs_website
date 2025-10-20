@@ -5,8 +5,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Demo Requests</h4>
-                    <span class="badge bg-primary">{{ $demoRequests->total() }} Total Requests</span>
+                    <h4 class="mb-sm-0">Customer Support Requests</h4>
+                    <span class="badge bg-primary">{{ $customerSupportRequests->total() }} Total Requests</span>
                 </div>
             </div>
         </div>
@@ -32,19 +32,17 @@
                                     <th>Company</th>
                                     <th>Industry</th>
                                     <th>Employees</th>
-                                    <th>Product</th>
-                                    <th>Purpose of Demo</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
+                                    <th>Issue Description</th>
+                                    <th>Availability Hours</th>
                                     <th>Message</th>
-                                    <th>Subscribe</th>
+                                    <th>Attachment</th>
                                     <th>Submitted</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($demoRequests as $request)
-                                    @if($request->type !== 'customer-support')
+                                @forelse($customerSupportRequests as $request)
+                                    @if($request->type === 'customer-support')
                                         <tr>
                                             <td>#{{ $request->id }}</td>
                                             <td>{{ $request->first_name }} {{ $request->last_name }}</td>
@@ -53,16 +51,16 @@
                                             <td>{{ $request->company_name }}</td>
                                             <td>{{ $request->industry }}</td>
                                             <td>{{ $request->number_of_employees }}</td>
-                                            <td>{{ Str::limit($request->product_name, 30) }}</td>
-                                            <td>{{ Str::limit($request->purpose_of_demo, 50) }}</td>
-                                            <td>{{ $request->date ?? '-' }}</td>
-                                            <td>{{ $request->time ?? '-' }}</td>
+                                            <td>{{ Str::limit($request->issue_description, 60) }}</td>
+                                            <td>{{ Str::limit($request->availability_hours, 40) }}</td>
                                             <td>{{ Str::limit($request->message, 50) }}</td>
                                             <td>
-                                                @if($request->subscribe_to_updates)
-                                                    <span class="badge bg-success">Yes</span>
+                                                @if($request->attachment)
+                                                    <a href="{{ $request->attachment }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                        View
+                                                    </a>
                                                 @else
-                                                    <span class="badge bg-secondary">No</span>
+                                                    <span class="text-muted">No file</span>
                                                 @endif
                                             </td>
                                             <td>{{ $request->created_at->format('M d, Y') }}</td>
@@ -71,7 +69,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Are you sure you want to delete the demo request from {{ $request->first_name }} {{ $request->last_name }}? This action cannot be undone.')">
+                                                            onclick="return confirm('Are you sure you want to delete the customer support request from {{ $request->first_name }} {{ $request->last_name }}? This action cannot be undone.')">
                                                         <i class="bx bx-trash"></i> Delete
                                                     </button>
                                                 </form>
@@ -80,14 +78,14 @@
                                     @endif
                                 @empty
                                     <tr>
-                                        <td colspan="15" class="text-center">No demo requests found.</td>
+                                        <td colspan="13" class="text-center">No customer support requests found.</td>
                                     </tr>
                                 @endforelse
                                 </tbody>
                             </table>
                         </div>
 
-                        {{ $demoRequests->links() }}
+                        {{ $customerSupportRequests->links() }}
                     </div>
                 </div>
             </div>
