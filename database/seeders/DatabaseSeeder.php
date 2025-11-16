@@ -15,18 +15,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-            Admin::query()->create([
-                'name' => 'admin',
-                'email' => 'admin@admin.com',
-                'phone' => '01066075300',
-                'password' => Hash::make('12345678'),
-            ]);
-
-
-        $this->call([
-            DepartmentAndJobSeeder::class,
-            PageStructureSeeder::class,
-        ]);
+//            Admin::query()->create([
+//                'name' => 'admin',
+//                'email' => 'admin@admin.com',
+//                'phone' => '01066075300',
+//                'password' => Hash::make('12345678'),
+//            ]);
+//
+//
+//        $this->call([
+//            DepartmentAndJobSeeder::class,
+//            PageStructureSeeder::class,
+//        ]);
 
     }
 }

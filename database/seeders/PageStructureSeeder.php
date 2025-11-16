@@ -11,25 +11,25 @@ class PageStructureSeeder extends Seeder
 {
     public function run()
     {
-        // Create 3 page categories
-        $categories = [
-            ['name' => 'Main Pages'],
-            ['name' => 'Information'],
-            ['name' => 'Services'],
-        ];
-
-        foreach ($categories as $categoryData) {
-            $category = PageCategory::create($categoryData);
-
-            // Create 2 pages for each category
-            $pages = $this->getPagesForCategory($category->id);
-            foreach ($pages as $pageData) {
-                $page = Page::create($pageData);
-
-                // Create 5 sections for each page
-                $this->createSectionsForPage($page->id);
-            }
-        }
+//        // Create 3 page categories
+//        $categories = [
+//            ['name' => 'Main Pages'],
+//            ['name' => 'Information'],
+//            ['name' => 'Services'],
+//        ];
+//
+//        foreach ($categories as $categoryData) {
+//            $category = PageCategory::create($categoryData);
+//
+//            // Create 2 pages for each category
+//            $pages = $this->getPagesForCategory($category->id);
+//            foreach ($pages as $pageData) {
+//                $page = Page::create($pageData);
+//
+//                // Create 5 sections for each page
+//                $this->createSectionsForPage($page->id);
+//            }
+//        }
     }
 
     protected function getPagesForCategory($categoryId)
