@@ -23,10 +23,10 @@ class DatabaseSeeder extends Seeder
             ]);
 
 
-//        $this->call([
-//            DepartmentAndJobSeeder::class,
-//            PageStructureSeeder::class,
-//        ]);
+        $this->call([
+            DepartmentAndJobSeeder::class,
+            PageStructureSeeder::class,
+        ]);
 
     }
 }
